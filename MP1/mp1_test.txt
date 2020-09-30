@@ -1,0 +1,97 @@
+EECS 332 - MP#1 - Andrew Quinn solution
+---------------------------------------
+
+
+
+
+
+
+
+
+
+                                                            x
+                                                            xxx                                                                         
+                                                            xxxxx
+                                                           xxxxxxxx
+                                                           xxxxxxxxxx
+                                                           xxxxxxxxxxxx
+                                                           xxxxxxxxxxxxxx
+                                                           xxxxxxxxxxxxxxxx
+                                                          xxxxxxxxxxxxxxxxxx
+                                                          xxxxxxxxxxxxxxxxxx
+                                                          xxxxxxxxxxxxxxxxxxx
+                                                          xxxxxxxxxxxxxxxxxxx
+                                                          xxxxxxxxxxxxxxxxxxxx
+                                                         xxxxxxxxxxxxxxxxxxxxx
+                                                         xxxxxxxxxxxxxxxxxxxxxx
+                                                         xxxxxxxxxxxxxxxxxxxxxx
+                                                         xxxxxxxxxxxxxxxxxxxxxx
+                                                         xxxxxxxxxxxxxxxxxxxxxxx
+                                                        xxxxxxxxxxxxxxxxxxxxxxxx
+                                                        xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                        xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                        xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                        xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                    xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                    xxxxxxxxxxxxxxxxxxxxxxxx
+                                                    xxxxxxxxxxxxxxxxxxxxxxx
+                                                    xxxxxxxxxxxxxxxxxxxxxxx
+                                                    xxxxxxxxxxxxxxxxxxxxxxxx
+                                                   xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                   xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                   xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                   xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                   xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                  xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                  xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                             xxxxxx
+                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                 xxxxxxxxxxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                                                     xxxxxxxxxxxxxxxxxxxxxxxxx
+                                                                                            xxxxxxxxxxxxxxxxx
+                                                                                                  xxxxxxxxxxx
+                                                                                                        xxxx
