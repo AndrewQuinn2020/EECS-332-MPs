@@ -121,6 +121,8 @@ def regions_finalizer(regions, eq_dict):
     return None
 
 def file_off_the_serials(regions):
+
+    regions = regions * 10
     x = regions[0, 0]
 
     for i in range(0, regions.shape[0]):

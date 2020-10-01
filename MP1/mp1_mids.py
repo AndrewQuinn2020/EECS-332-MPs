@@ -6,7 +6,7 @@ from PIL import Image
 import numpy as np
 
 np.set_printoptions(threshold=sys.maxsize)
-
+np.set_printoptions(linewidth=1000)
 
 script_dir = os.path.dirname(__file__)
 mids_dir = os.path.join(script_dir, "mid_tests")
@@ -22,6 +22,32 @@ rel_image_paths = ['face.bmp',
 
 abs_image_paths = list(map(lambda s: os.path.join(script_dir, s),
                        rel_image_paths))
+
+def size_filter(old_binary, new_binary):
+    def any_neighbors_like_me(old_binary, x, y):
+        c = 0
+        if x > 0 and old_binary[x-1, y] == old_binary[x, y]:
+            c = c + 1
+        if x < old_binary.shape[0]-1 and old_binary[x+1, y] == old_binary[x, y]:
+            c = c + 1
+        if y > 0 and old_binary[x, y-1] == old_binary[x, y]:
+            c = c + 1
+        if y < old_binary.shape[1]-1 and old_binary[x, y+1] == old_binary[x, y]:
+            c = c + 1
+        return c > 0
+
+    pixels_deleted = 0
+
+    for i in range(0, old_binary.shape[0]):
+        for j in range(0, old_binary.shape[1]):
+            if any_neighbors_like_me(old_binary, i, j):
+                new_binary[i, j] = old_binary[i, j]
+            else:
+                pixels_deleted = pixels_deleted + 1
+                new_binary[i, j] = not old_binary[i, j]
+
+    return pixels_deleted
+
 
 
 def check_pxl(image, regions, x, y, new_region, eq_classes=None, verbose=False,
@@ -129,19 +155,26 @@ def regions_finalizer(regions, eq_dict):
 
 
 def file_off_the_serials(regions):
-    region_swapper = dict()
-    region_code = regions[0, 0]
 
     for i in range(0, regions.shape[0]):
         for j in range(0, regions.shape[1]):
-            if regions[i, j] > region_code:
-                if regions[i, j] in region_swapper.keys():
-                    regions[i, j] = region_swapper.get(regions[i, j])
-                else:
-                    region_swapper[regions[i, j]] = region_code+1
-                    regions[i, j] = region_code+1
-                    region_code = region_code+1
-    return region_code
+            regions[i, j] = regions[i, j] << 4
+
+    region_code = 0
+
+    print(regions)
+
+    region_codebook = {0: 0}
+
+    for i in range(0, regions.shape[0]):
+        for j in range(0, regions.shape[1]):
+            if regions[i, j] not in region_codebook.keys():
+                region_codebook[regions[i, j]] = region_code+1
+                region_code = region_code+1
+                print("New region code added. {}".format(region_codebook))
+            regions[i, j] = region_codebook[regions[i, j]]
+
+    return region_code+1
 
 
 def regions_to_grayscale(old_regions, new_grayscale, num_regions):
@@ -149,6 +182,15 @@ def regions_to_grayscale(old_regions, new_grayscale, num_regions):
             for j in range(0, old_regions.shape[1]):
                 new_grayscale[i, j] = int(255 - (old_regions[i, j] * (255 / num_regions)))
         return None
+
+
+def regions_to_txt(old_regions):
+        for i in range(0, old_regions.shape[0]):
+            for j in range(0, old_regions.shape[1]):
+                print(old_regions[i, j], end="")
+            print("")
+        return None
+
 
 
 if __name__ == "__main__":
@@ -166,12 +208,12 @@ if __name__ == "__main__":
 
         number_of_regions = file_off_the_serials(p_regions)
         print("Regions total: ", number_of_regions)
-        print(p_regions)
+        # print(p_regions)
 
         p_grayscale = np.zeros(p_regions.shape, dtype=int)
 
         regions_to_grayscale(p_regions, p_grayscale, number_of_regions)
-        print(p_grayscale)
+        # print(p_grayscale)
 
         mids_gs_dir = os.path.join(script_dir, "mid_tests_gs")
         gs_loc = os.path.join(mids_gs_dir, os.path.splitext(mid)[0][-7:] + "_gs.bmp")
@@ -188,18 +230,66 @@ if __name__ == "__main__":
         eqs_orig = set_initial_regions(p_orig, p_regions)
 
         reduced_eq = eq_reducer(eqs_orig)
+        print("EQ: {}".format(reduced_eq))
+        print("Pre-finalization...")
+        print(p_regions)
 
+        print("Post-finalization...")
         regions_finalizer(p_regions, reduced_eqs_to_dict(reduced_eq))
+        print(p_regions)
 
         number_of_regions = file_off_the_serials(p_regions)
         print("Regions total: ", number_of_regions)
-        # print(p_regions)
+        regions_to_txt(p_regions)
 
         p_grayscale = np.zeros(p_regions.shape, dtype=int)
 
         regions_to_grayscale(p_regions, p_grayscale, number_of_regions)
         # print(p_grayscale)
         gs_loc = img[:-4] + "_gs.bmp"
+        print(gs_loc)
+
+        im = Image.fromarray(p_grayscale.astype(np.uint8), 'L')
+        im.save(gs_loc)
+
+    for img in [os.path.join(script_dir, 'gun.bmp')]:
+        print(img)
+
+        p_orig = np.array(Image.open(img))
+        p_filtered = np.zeros_like(p_orig)
+        print(p_orig)
+        print(p_filtered)
+
+        print("Single pixels filtered from gun.bmp:", size_filter(p_orig,
+                                                                  p_filtered))
+
+        filtered_loc = os.path.join(script_dir, 'gun_size_filtered.bmp')
+        im = Image.fromarray(p_filtered)
+        im.save(filtered_loc)
+
+        p_orig = np.array(Image.open(filtered_loc).convert('L')).astype(int)
+        p_regions = np.zeros(p_orig.shape, dtype=int)
+
+        eqs_orig = set_initial_regions(p_orig, p_regions)
+
+        reduced_eq = eq_reducer(eqs_orig)
+        print("EQ: {}".format(reduced_eq))
+        print("Pre-finalization...")
+        print(p_regions)
+
+        print("Post-finalization...")
+        regions_finalizer(p_regions, reduced_eqs_to_dict(reduced_eq))
+        print(p_regions)
+
+        number_of_regions = file_off_the_serials(p_regions)
+        print("Regions total: ", number_of_regions)
+        regions_to_txt(p_regions)
+
+        p_grayscale = np.zeros(p_regions.shape, dtype=int)
+
+        regions_to_grayscale(p_regions, p_grayscale, number_of_regions)
+        # print(p_grayscale)
+        gs_loc = filtered_loc[:-4] + "_gs.bmp"
         print(gs_loc)
 
         im = Image.fromarray(p_grayscale.astype(np.uint8), 'L')
