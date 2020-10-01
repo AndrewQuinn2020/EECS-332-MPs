@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-import os, sys
+import os
+import sys
 from PIL import Image
 import numpy as np
 
@@ -73,7 +74,7 @@ def set_initial_regions(image, region):
             if region[i, j] == next_region:
                 next_region += 1
 
-    return (next_region, eqs)
+    return eqs
 
 
 def eq_reduce(eq_classes, rdepth=1):
