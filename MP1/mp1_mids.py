@@ -23,7 +23,8 @@ rel_image_paths = ['face.bmp',
 abs_image_paths = list(map(lambda s: os.path.join(script_dir, s),
                        rel_image_paths))
 
-def size_filter(old_binary, new_binary):
+
+def size_filter_binary(old_binary, new_binary):
     def any_neighbors_like_me(old_binary, x, y):
         c = 0
         if x > 0 and old_binary[x-1, y] == old_binary[x, y]:
@@ -47,6 +48,40 @@ def size_filter(old_binary, new_binary):
                 new_binary[i, j] = not old_binary[i, j]
 
     return pixels_deleted
+
+
+def size_filter(old, new, n=1, complete=True):
+    if n == 1:
+        return size_filter_binary(old, new)
+    else:
+        def find_boundary_sizes(regions):
+            boundary_sizes = {0:0}
+
+            for i in range(0, regions.shape[0]):
+                for j in range(0, regions.shape[1]):
+                    if old[i, j] not in boundary_sizes.keys():
+                        boundary_sizes[regions[i, j]] = 1
+                    else:
+                        boundary_sizes[regions[i,j]] += 1
+            return boundary_sizes
+
+        bs1 = find_boundary_sizes(old)
+
+        if np.array_equal(old, new):
+            for i in range(0, old.shape[0]):
+                for j in range(0, old.shape[1]):
+                    if bs1[old[i, j]] < n:
+                        new[i, j] = 0
+                    else:
+                        new[i, j] = old[i, j]
+        else:
+            for i in range(0, old.shape[0]):
+                for j in range(0, old.shape[1]):
+                    if bs1[old[i, j]] < n:
+                        new[i, j] = 0
+
+        bs2 = find_boundary_sizes(new)
+        return (bs1, bs2)
 
 
 
@@ -289,6 +324,46 @@ if __name__ == "__main__":
 
         regions_to_grayscale(p_regions, p_grayscale, number_of_regions)
         # print(p_grayscale)
+        gs_loc = filtered_loc[:-4] + "_gs.bmp"
+        print(gs_loc)
+
+        im = Image.fromarray(p_grayscale.astype(np.uint8), 'L')
+        im.save(gs_loc)
+
+
+        print(size_filter(p_regions, p_regions, n=50))
+        file_off_the_serials(p_regions)
+        print(size_filter(p_regions, p_regions, n=50))
+
+        print("Regions total: ", number_of_regions)
+        regions_to_txt(p_regions)
+
+        p_grayscale = np.zeros(p_regions.shape, dtype=int)
+
+        regions_to_grayscale(p_regions, p_grayscale, number_of_regions)
+        # print(p_grayscale)
+        filtered_loc = os.path.join(script_dir, 'gun_size_filtered_hard.bmp')
+
+        gs_loc = filtered_loc[:-4] + "_gs.bmp"
+        print(gs_loc)
+
+        im = Image.fromarray(p_grayscale.astype(np.uint8), 'L')
+        im.save(gs_loc)
+
+
+        print(size_filter(p_regions, p_regions, n=250))
+        file_off_the_serials(p_regions)
+        print(size_filter(p_regions, p_regions, n=250))
+
+        print("Regions total: ", number_of_regions)
+        regions_to_txt(p_regions)
+
+        p_grayscale = np.zeros(p_regions.shape, dtype=int)
+
+        regions_to_grayscale(p_regions, p_grayscale, number_of_regions)
+        # print(p_grayscale)
+        filtered_loc = os.path.join(script_dir, 'gun_size_filtered_very_hard.bmp')
+
         gs_loc = filtered_loc[:-4] + "_gs.bmp"
         print(gs_loc)
 
