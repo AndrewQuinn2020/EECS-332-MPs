@@ -227,11 +227,11 @@ def regions_to_txt(old_regions):
         return None
 
 
-
 if __name__ == "__main__":
-    if not os.path.exists('mid_tests_gs'):
-        os.makedirs('mid_tests_gs')
-        
+
+    if not os.path.exists(os.path.join(script_dir, 'mid_tests_gs')):
+        os.makedirs(os.path.join(script_dir, 'mid_tests_gs'))
+
     for mid in mid_test_files_abs:
         print("Regions of: ", mid)
 
@@ -335,7 +335,7 @@ if __name__ == "__main__":
 
 
         print(size_filter(p_regions, p_regions, n=50))
-        file_off_the_serials(p_regions)
+        number_of_regions = file_off_the_serials(p_regions)
         print(size_filter(p_regions, p_regions, n=50))
 
         print("Regions total: ", number_of_regions)
@@ -355,7 +355,7 @@ if __name__ == "__main__":
 
 
         print(size_filter(p_regions, p_regions, n=250))
-        file_off_the_serials(p_regions)
+        number_of_regions = file_off_the_serials(p_regions)
         print(size_filter(p_regions, p_regions, n=250))
 
         print("Regions total: ", number_of_regions)
