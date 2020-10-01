@@ -229,6 +229,9 @@ def regions_to_txt(old_regions):
 
 
 if __name__ == "__main__":
+    if not os.path.exists('mid_tests_gs'):
+        os.makedirs('mid_tests_gs')
+        
     for mid in mid_test_files_abs:
         print("Regions of: ", mid)
 
