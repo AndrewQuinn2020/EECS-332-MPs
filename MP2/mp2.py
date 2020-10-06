@@ -23,8 +23,11 @@ se_cross_3    = np.array([[False, True,  False],
 se_north_3    = np.array([[False, True,  False],
                           [False, True,  False],
                           [False, False, False]])
+se_glider_3    = np.array([[False, True,  False],
+                           [True, False,  False],
+                           [True, True, True]])
 
-structural_elements = [se_identity_1, se_cross_3, se_north_3]
+structural_elements = [se_identity_1, se_cross_3, se_north_3, se_glider_3]
 
 def namestr(obj, namespace=globals()):
     return [name for name in namespace if namespace[name] is obj]
