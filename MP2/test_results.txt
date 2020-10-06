@@ -2910,3 +2910,72 @@ SE 3x3 north (Trues may also have True above):
  [False  True  True  True  True False False]
  [False  True  True  True  True False False]
  [ True  True False  True  True  True False]]
+
+
+
+============ BOUNDARY TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False  True  True  True False  True]
+ [ True False False False False  True  True]
+ [ True False False False False  True  True]
+ [False False  True False False False  True]
+ [False False  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False  True  True  True False  True]
+ [ True False False False False  True  True]
+ [ True False False False False  True  True]
+ [False False  True False False False  True]
+ [False False  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False  True  True  True False  True]
+ [ True False False False False  True  True]
+ [ True False False False False  True  True]
+ [False False  True False False False  True]
+ [False False  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
+
+   cross closing ... 
+[[ True False  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True False  True False False]
+ [ True  True False  True  True  True False]
+ [False  True False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
+
+   north boundary ... 
+[[False False False False False False False]
+ [False False False  True  True False False]
+ [ True False False False False False False]
+ [False False  True  True  True False False]
+ [False False False False False False False]
+ [ True False False False False  True False]
+ [False False False False False False False]]

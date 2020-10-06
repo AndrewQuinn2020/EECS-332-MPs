@@ -130,3 +130,24 @@ if __name__ == "__main__":
         print(img_in)
         print("\n   north closing ... ")
         print(closing(img_in, se_north_3))
+
+
+    print("\n\n\n============ BOUNDARY TEST ==============\n\n\n")
+    print("SE 1x1 identity (should all be True):")
+    print(img_in == boundary(img_in, se_identity_1))
+    print("SE 3x3 identity (should all be True):")
+    print(img_in == boundary(img_in, se_identity_3))
+    print("SE 5x5 identity (should all be True):")
+    print(img_in == boundary(img_in, se_identity_5))
+
+    print("SE 3x3 cross (only Trues which have True on any sides):")
+    print("\n   original ... ")
+    print(img_in)
+    print("\n   cross closing ... ")
+    print(boundary(img_in, se_cross_3, verbose=False))
+
+    print("SE 3x3 north (Trues may also have True above):")
+    print("\n   original ... ")
+    print(img_in)
+    print("\n   north boundary ... ")
+    print(boundary(img_in, se_north_3))
