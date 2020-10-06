@@ -126,7 +126,7 @@ def dilated_pixel(img, se, x, y, verbose=False):
                 if se[i, j]:
                     if verbose:
                         print("Pixel active, assigning... {} && {} == {}.".format(img[comp[0], comp[1]], se[i, j], (img[comp[0], comp[1]] and se[i, j])))
-                    return_bool = return_bool and (img[comp[0], comp[1]] and se[i, j])
+                    return_bool = return_bool or (img[comp[0], comp[1]] and se[i, j])
                 else:
                     if verbose:
                         print("SE pixel not active. Moving on.")
