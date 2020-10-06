@@ -155,6 +155,23 @@ def closing(img, se, verbose=False):
     return erode(dilate(img, se, verbose=verbose), se, verbose=verbose)
 
 
+def boundary(img, se, verbose=False):
+    out = np.zeros((img.shape[0], img.shape[1])).astype(type(True))
+    diff = erode(img, se, verbose=verbose)
+
+    for i in range(0, img.shape[0]):
+        for j in range(0, img.shape[1]):
+            if not img[i, j]:
+                out[i, j] = False
+            elif diff[i, j]:
+                out[i, j] = False
+            else:
+                out[i, j] = img[i, j]
+
+    return out
+
+
+
 if __name__ == "__main__":
     print("Andrew Quinn - EECS 332 - MP#2\n" + ("-" * 80))
 
