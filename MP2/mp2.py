@@ -148,11 +148,11 @@ def dilate(img, se, verbose=False):
 
 
 def opening(img, se, verbose=False):
-    return erode(dilate(img, se, verbose=verbose), se, verbose=verbose)
+    return dilate(erode(img, se, verbose=verbose), se, verbose=verbose)
 
 
 def closing(img, se, verbose=False):
-    return dilate(erode(img, se, verbose=verbose), se, verbose=verbose)
+    return erode(dilate(img, se, verbose=verbose), se, verbose=verbose)
 
 
 if __name__ == "__main__":
