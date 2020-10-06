@@ -147,6 +147,13 @@ def dilate(img, se, verbose=False):
     return out
 
 
+def opening(img, se, verbose=False):
+    return erode(dilate(img, se, verbose=verbose), se, verbose=verbose)
+
+
+def closing(img, se, verbose=False):
+    return dilate(erode(img, se, verbose=verbose), se, verbose=verbose)
+
 
 if __name__ == "__main__":
     print("Andrew Quinn - EECS 332 - MP#2\n" + ("-" * 80))

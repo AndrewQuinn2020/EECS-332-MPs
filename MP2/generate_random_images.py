@@ -10,7 +10,7 @@ np.set_printoptions(threshold=sys.maxsize)
 
 script_dir = os.path.dirname(__file__)
 
-image_dimensions = (5, 5)
+image_dimensions = (7, 7)
 
 
 if __name__ == "__main__":
