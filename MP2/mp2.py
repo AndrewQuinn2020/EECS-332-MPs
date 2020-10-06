@@ -6,6 +6,7 @@ import sys
 import itertools
 from PIL import Image
 import numpy as np
+from pathlib import Path
 
 
 np.set_printoptions(threshold=sys.maxsize)
@@ -14,6 +15,19 @@ np.set_printoptions(linewidth=1000)
 script_dir = os.path.dirname(__file__)
 images_dir = os.path.join(script_dir, "images")
 images = [os.path.join(images_dir, f) for f in os.listdir(images_dir)]
+
+se_identity_1 = np.array([[True]])
+se_cross_3    = np.array([[False, True,  False],
+                          [True,  True,   True],
+                          [False, True,  False]])
+se_north_3    = np.array([[False, True,  False],
+                          [False, True,  False],
+                          [False, False, False]])
+
+structural_elements = [se_identity_1, se_cross_3, se_north_3]
+
+def namestr(obj, namespace=globals()):
+    return [name for name in namespace if namespace[name] is obj]
 
 
 def neighborhood_coordinates(img, x, y, dx=1, dy=1):
@@ -172,29 +186,33 @@ def boundary(img, se, verbose=False):
 
 
 
+
+
 if __name__ == "__main__":
     print("Andrew Quinn - EECS 332 - MP#2\n" + ("-" * 80))
+    results_dir = os.path.join(script_dir, 'results')
+    se_dir = os.path.join(script_dir, 'structure_elems')
 
-    if not os.path.exists(os.path.join(script_dir, 'results')):
-        os.makedirs(os.path.join(script_dir, 'results'))
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+    if not os.path.exists(se_dir):
+        os.makedirs(se_dir)
 
-    test_img_array_1 = np.array([[True, True, True],
-                                 [True, True, True],
-                                 [True, True, True]])
+    for se in structural_elements:
+        se_name = namestr(se)[0]
+        se_save_location = os.path.join(se_dir, se_name + ".bmp")
+        im = Image.fromarray(se.astype(np.uint8) * 255, 'L')
+        im.save(se_save_location)
 
-    test_se_1 = np.array([[False, True, True],
-                          [True, True, True],
-                          [True, True, True]])
+    print("You can see the various SEs used by checking structure_elems/.")
 
-    print("Testing")
-    print(erode(test_img_array_1, test_se_1, verbose=True))
+    for image in images:
+        print(image)
+        img_in = np.array(Image.open(image))
+        for se in structural_elements:
+            for op in [erode, dilate, opening, closing, boundary]:
+                rel_filename = Path(image).stem + "-" + namestr(se)[0] + "-" + namestr(op)[0] + ".bmp"
+                abs_filename = os.path.join(results_dir, rel_filename)
 
-    # for image in images:
-    #     img_in = np.array(Image.open(image).convert('1'))
-    #     print(img_in)
-    #
-    #     se = np.array([[True, True, True],
-    #                    [True, True, True],
-    #                    [True, True, True]])
-    #
-    #     eroded_pixel(img_in, se, 0, 0)
+                im = Image.fromarray(op(img_in, se))
+                im.save(abs_filename)
