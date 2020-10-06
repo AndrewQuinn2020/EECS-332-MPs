@@ -87,7 +87,7 @@ if __name__ == "__main__":
         print("SE 3x3 north (Trues may also have True above):")
         print("\n   original ... ")
         print(img_in)
-        print("\n   north erode ... ")
+        print("\n   north dilate ... ")
         print(dilate(img_in, se_north_3))
 
 

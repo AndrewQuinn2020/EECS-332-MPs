@@ -7,13 +7,13 @@ Andrew Quinn - EECS 332 - MP#2, Testing Framework
 
 
 test_images/test_image_000.bmp
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
 
 
@@ -49,16 +49,16 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on all sides):
 
    original ... 
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
    cross erode ... 
-[[ True False False False False False False]
+[[False False False False False False False]
  [False False False False False False False]
  [False False False False False False False]
  [False False False False False False False]
@@ -68,22 +68,22 @@ SE 3x3 cross (only Trues which have True on all sides):
 SE 3x3 north (only Trues which have True above as well):
 
    original ... 
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
    north erode ... 
-[[ True  True False  True  True False False]
- [ True False False  True False False False]
- [False False False  True False  True False]
- [False False  True  True False False False]
+[[False False False False  True  True False]
  [False False False False  True False False]
  [False False False False  True False False]
- [False False False False False  True False]]
+ [False False False False False False False]
+ [False False  True False False False False]
+ [False False  True False  True False False]
+ [False False False False False False False]]
 
 
 
@@ -118,16 +118,16 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
    cross dilate ... 
-[[ True  True  True  True  True  True  True]
+[[False False  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
@@ -137,22 +137,22 @@ SE 3x3 cross (only Trues which have True on any sides):
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
-   north erode ... 
-[[ True  True False  True  True False False]
- [ True  True False  True  True  True  True]
- [ True False  True  True False  True  True]
- [False  True  True  True  True  True  True]
+   north dilate ... 
+[[False False False False  True  True False]
+ [False False  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True False]
  [False  True  True  True  True False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True  True  True]]
+ [False  True  True False  True False  True]
+ [ True  True  True False  True  True False]]
 
 
 
@@ -187,17 +187,86 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
-   cross dilate ... 
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
+
+   north opening ... 
+[[False False False False  True  True False]
+ [False False False False  True  True False]
+ [False False False False  True False False]
+ [False False False False  True False False]
+ [False False  True False False False False]
+ [False False  True False  True False False]
+ [False False  True False  True False False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
 [[ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
+
+   cross closing ... 
+[[False False False  True  True  True  True]
+ [False False  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
@@ -206,22 +275,22 @@ SE 3x3 cross (only Trues which have True on any sides):
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True False]
- [False  True  True  True  True False  True]
- [False False False False  True False False]
- [ True  True  True False  True  True False]
- [False False False False False  True  True]]
+[[False False False False  True  True False]
+ [False False  True  True  True False  True]
+ [ True  True False False  True  True False]
+ [False False  True  True False False False]
+ [False  True  True False  True False  True]
+ [False False  True False  True False False]
+ [ True  True False False False  True False]]
 
-   north erode ... 
-[[ True  True False  True  True False False]
- [ True  True False  True  True False False]
- [ True False False  True False  True  True]
- [False False  True  True False  True  True]
- [False  True  True  True  True False  True]
- [False  True  True False  True False False]
- [ True  True  True False  True  True False]]
+   north closing ... 
+[[False False False False  True  True False]
+ [False False False False  True  True False]
+ [False False  True  True  True  True  True]
+ [ True  True  True  True  True  True False]
+ [False  True  True  True  True False False]
+ [False  True  True False  True False  True]
+ [False  True  True False  True False False]]
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
@@ -229,235 +298,13 @@ SE 3x3 north (Trues may also have True above):
 
 
 test_images/test_image_001.bmp
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-
-
-
-============ EROSION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on all sides):
-
-   original ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-   cross erode ... 
-[[False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [ True False False False False False False]
- [False False False False False False False]
- [False False False False False False False]]
-SE 3x3 north (only Trues which have True above as well):
-
-   original ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-   north erode ... 
-[[ True False False  True False False  True]
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
  [ True False False  True False False False]
- [False False False False False False False]
- [False False False False False False False]
- [ True  True False  True False False False]
- [ True False  True False False False False]
- [False False False False False False False]]
-
-
-
-============ DILATION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-   cross dilate ... 
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True False  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-   north erode ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False  True]
- [ True  True  True  True False  True False]
- [ True  True False  True False  True False]
- [ True  True  True  True False  True  True]
- [ True  True  True  True False  True  True]
- [ True  True  True  True False  True False]]
-
-
-
-============ OPENING TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-   cross dilate ... 
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True False  True  True]
- [ True  True  True False False False  True]
- [ True  True  True  True False  True  True]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[ True False False  True False False  True]
- [ True  True  True  True False False False]
- [False False False False False  True False]
- [ True  True False  True False False False]
- [ True  True  True  True False  True  True]
- [ True False  True False False False False]
- [False  True False  True False  True False]]
-
-   north erode ... 
-[[ True False False  True False False  True]
- [ True False False  True False False  True]
- [ True  True  True  True False False False]
- [ True  True False  True False  True False]
- [ True  True False  True False  True False]
- [ True  True  True  True False  True  True]
- [ True  True  True  True False  True False]]
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-
-
-
-test_images/test_image_002.bmp
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
+ [False  True False  True  True False False]]
 
 
 
@@ -493,13 +340,13 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on all sides):
 
    original ... 
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
 
    cross erode ... 
 [[False False False False False False False]
@@ -512,244 +359,22 @@ SE 3x3 cross (only Trues which have True on all sides):
 SE 3x3 north (only Trues which have True above as well):
 
    original ... 
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
 
    north erode ... 
-[[False False False  True  True False False]
- [False False False  True False False False]
- [ True  True False False False False False]
- [False False  True False False False False]
- [False False False  True False False False]
- [False False False  True False  True False]
- [False False False False False False False]]
-
-
-
-============ DILATION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
-
-   cross dilate ... 
-[[ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True False  True False]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
-
-   north erode ... 
-[[False False False  True  True False False]
- [ True  True False  True  True False False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True False  True  True False  True  True]
- [ True False False  True False  True  True]
- [False  True False  True False  True False]]
-
-
-
-============ OPENING TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
-
-   cross dilate ... 
-[[ True  True  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True False  True False]
- [ True  True  True False False False False]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[False False False  True  True False False]
- [ True  True False  True False False False]
- [ True  True  True False  True  True  True]
- [False False  True  True False False False]
- [ True False False  True False  True  True]
- [False False False  True False  True False]
- [False  True False False False False False]]
-
-   north erode ... 
-[[False False False  True  True False False]
- [False False False  True  True False False]
- [ True  True False  True  True False False]
- [ True  True  True  True  True  True  True]
- [ True False  True  True False  True  True]
- [ True False False  True False  True  True]
- [False False False  True False  True False]]
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-
-
-
-test_images/test_image_003.bmp
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
-
-
-
-
-============ EROSION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on all sides):
-
-   original ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
-
-   cross erode ... 
-[[False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]]
-SE 3x3 north (only Trues which have True above as well):
-
-   original ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
-
-   north erode ... 
-[[False False False False False False  True]
- [False False False False False False False]
- [False False  True False False False False]
+[[ True False  True  True  True  True False]
+ [ True False  True False False  True False]
  [False  True False False False False False]
+ [False  True False False  True False False]
+ [False False False False  True False False]
  [False False False  True False False False]
- [False False False False False False False]
- [False False False False False  True False]]
+ [False False False  True False False False]]
 
 
 
@@ -784,262 +409,40 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
 
    cross dilate ... 
-[[ True False  True  True False  True  True]
- [ True  True  True  True  True False  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
-
-   north erode ... 
-[[False False False False False False  True]
- [ True False  True  True False False  True]
- [ True  True  True  True False False  True]
- [ True  True  True  True  True  True  True]
- [ True  True False  True  True  True False]
- [ True False False  True  True  True False]
- [ True False  True False  True  True False]]
-
-
-
-============ OPENING TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
 [[ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
-
-   cross dilate ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [ True  True  True  True  True False  True]
- [ True  True  True  True  True  True False]
  [ True  True  True  True  True False False]
+ [ True  True  True  True  True  True False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
+
+   north dilate ... 
+[[ True False  True  True  True  True False]
  [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[False False False False False False  True]
- [ True False  True  True False False False]
- [False  True  True False False False  True]
- [ True  True False  True  True  True False]
- [False False False  True False False False]
- [ True False False False  True  True False]
- [False False  True False False  True False]]
-
-   north erode ... 
-[[False False False False False False  True]
- [False False False False False False  True]
- [ True False  True  True False False  True]
- [ True  True  True  True False False  True]
- [ True  True False  True  True  True False]
- [ True False False  True  True  True False]
- [ True False False False  True  True False]]
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-
-
-
-test_images/test_image_004.bmp
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
-
-
-
-
-============ EROSION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
+ [ True  True  True False  True  True False]
+ [ True  True False False  True  True  True]
  [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on all sides):
-
-   original ... 
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
-
-   cross erode ... 
-[[False False False False False False False]
- [False False  True False  True False False]
- [False False False  True False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]]
-SE 3x3 north (only Trues which have True above as well):
-
-   original ... 
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
-
-   north erode ... 
-[[ True False  True False  True False False]
- [False False  True False  True False False]
- [False False  True  True  True False  True]
- [False False False  True False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]]
-
-
-
-============ DILATION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
-
-   cross dilate ... 
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [False  True  True  True  True  True  True]
- [ True  True  True  True  True False  True]
- [False  True False  True  True  True  True]
- [ True  True False  True  True  True  True]
- [ True  True  True  True  True False False]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
-
-   north erode ... 
-[[ True False  True False  True False False]
- [ True  True  True  True  True  True  True]
- [False  True  True  True  True  True  True]
- [False  True  True  True  True False  True]
- [False  True False  True False False  True]
- [False False False False  True False  True]
+ [ True False  True  True  True False False]
  [ True  True False  True  True False False]]
 
 
@@ -1075,41 +478,983 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
 
-   cross dilate ... 
-[[ True  True  True  True  True  True  True]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
- [False False False False  True False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False False  True  True  True False  True]
- [False  True False  True False False False]
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
+
+   north opening ... 
+[[ True False  True  True  True  True False]
+ [ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [False  True False False  True False False]
+ [False False False  True  True False False]
+ [False False False  True False False False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
+
+   cross closing ... 
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True False False]
+ [ True  True  True  True False False False]
+ [ True  True  True  True  True False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False  True  True  True  True False]
+ [ True  True  True False False  True False]
+ [False  True False False  True False False]
+ [ True  True False False  True  True  True]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [False  True False  True  True False False]]
+
+   north closing ... 
+[[ True False  True  True  True  True False]
+ [ True False  True  True  True  True False]
+ [ True  True  True False  True  True False]
+ [ True  True False False  True  True False]
+ [ True  True False False  True  True  True]
+ [ True False  True  True  True False False]
+ [ True False False  True  True False False]]
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+
+
+
+test_images/test_image_002.bmp
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+
+
+
+============ EROSION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on all sides):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   cross erode ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
  [False False False False False False  True]
- [False False False False  True False False]
- [ True  True False  True False False False]]
+ [False False False False False False False]
+ [False False False False False False  True]
+ [False False False False False False False]]
+SE 3x3 north (only Trues which have True above as well):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
 
    north erode ... 
-[[ True False  True False  True False False]
- [ True False  True False  True False False]
- [False  True  True  True  True  True  True]
- [False  True  True  True  True False  True]
- [False  True False  True False False  True]
+[[ True False False False False False  True]
+ [False False False False False False False]
+ [False False  True False  True False False]
+ [ True False  True False  True False  True]
+ [False False False False  True False  True]
  [False False False False False False  True]
- [False False False False  True False False]]
+ [False False False  True False False  True]]
+
+
+
+============ DILATION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   cross dilate ... 
+[[ True  True  True False  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   north dilate ... 
+[[ True False False False False False  True]
+ [ True  True  True False  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True False  True  True  True  True  True]
+ [ True  True  True False  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True False  True  True]]
+
+
+
+============ OPENING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False  True]
+ [False False False False False  True  True]
+ [False False False False False False  True]
+ [False False False False False  True  True]
+ [False False False False False False  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   north opening ... 
+[[ True False False False False False  True]
+ [ True False False False False False  True]
+ [False False  True False  True False False]
+ [ True False  True False  True False  True]
+ [ True False  True False  True False  True]
+ [False False False False  True False  True]
+ [False False False  True False False  True]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   cross closing ... 
+[[ True  True False False False  True  True]
+ [ True  True  True False  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False False False False False  True]
+ [False  True  True False  True  True False]
+ [ True False  True  True  True False  True]
+ [ True False  True False  True  True  True]
+ [False  True False False  True False  True]
+ [ True False  True  True False  True  True]
+ [False  True False  True False False  True]]
+
+   north closing ... 
+[[ True False False False False False  True]
+ [ True False False False False False  True]
+ [ True  True  True False  True  True  True]
+ [ True False  True  True  True  True  True]
+ [ True False  True False  True  True  True]
+ [ True  True  True False  True  True  True]
+ [ True  True  True  True False  True  True]]
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+
+
+
+test_images/test_image_003.bmp
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+
+
+
+============ EROSION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on all sides):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   cross erode ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False  True False]
+ [False False False False False  True  True]
+ [False False False False False False False]
+ [False False False False False False False]]
+SE 3x3 north (only Trues which have True above as well):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   north erode ... 
+[[False False False  True  True False  True]
+ [False False False False False False  True]
+ [False False False False False False False]
+ [False False False False False  True False]
+ [False  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [False  True False False False False False]]
+
+
+
+============ DILATION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   cross dilate ... 
+[[ True False  True  True  True  True  True]
+ [ True  True False  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True False  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   north dilate ... 
+[[False False False  True  True False  True]
+ [ True False False  True  True False  True]
+ [ True False False  True False  True  True]
+ [False  True False  True  True  True  True]
+ [ True  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [ True  True False False  True  True  True]]
+
+
+
+============ OPENING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False  True False]
+ [False False False False  True  True  True]
+ [False False False False  True  True  True]
+ [False False False False False  True  True]
+ [False False False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   north opening ... 
+[[False False False  True  True False  True]
+ [False False False  True  True False  True]
+ [False False False False False False  True]
+ [False False False False False  True False]
+ [False  True False False  True  True  True]
+ [False  True False False  True  True  True]
+ [False  True False False False  True  True]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   cross closing ... 
+[[False False False  True  True  True  True]
+ [ True False False False  True  True  True]
+ [ True  True False  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True False  True  True  True]
+ [ True  True False False False  True  True]
+ [ True  True  True False  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False False  True  True False  True]
+ [ True False False False False False  True]
+ [False False False  True False  True False]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [False  True False False False  True  True]
+ [ True  True False False  True False False]]
+
+   north closing ... 
+[[False False False  True  True False  True]
+ [False False False  True  True False  True]
+ [ True False False  True False False  True]
+ [False False False  True False  True  True]
+ [False  True False False  True  True  True]
+ [ True  True False False  True  True  True]
+ [ True  True False False  True  True  True]]
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+
+
+
+test_images/test_image_004.bmp
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+
+
+
+============ EROSION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on all sides):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   cross erode ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False  True False]
+ [False False False False False False False]
+ [ True False False False False False False]
+ [ True False False False False False False]]
+SE 3x3 north (only Trues which have True above as well):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   north erode ... 
+[[ True False False  True  True False False]
+ [False False False  True False False False]
+ [False False  True  True False False False]
+ [False  True False  True False  True False]
+ [False False False False False  True  True]
+ [ True False False False False  True False]
+ [ True  True False False False False False]]
+
+
+
+============ DILATION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   cross dilate ... 
+[[ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   north dilate ... 
+[[ True False False  True  True False False]
+ [ True False  True  True  True False False]
+ [ True  True  True  True False  True False]
+ [ True  True  True  True  True  True  True]
+ [ True  True False  True  True  True  True]
+ [ True  True  True False False  True  True]
+ [ True  True  True  True  True  True  True]]
+
+
+
+============ OPENING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False  True False]
+ [False False False False  True  True  True]
+ [ True False False False False  True False]
+ [ True  True False False False False False]
+ [ True  True False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   north opening ... 
+[[ True False False  True  True False False]
+ [ True False False  True  True False False]
+ [False False  True  True False False False]
+ [False  True  True  True False  True False]
+ [False  True False  True False  True  True]
+ [ True False False False False  True  True]
+ [ True  True False False False  True False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   cross closing ... 
+[[ True  True  True  True  True False False]
+ [ True  True  True  True  True False False]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True False False  True  True False False]
+ [False False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [False  True False  True  True  True  True]
+ [ True False False False False  True  True]
+ [ True  True  True False False  True False]
+ [ True  True False  True  True False  True]]
+
+   north closing ... 
+[[ True False False  True  True False False]
+ [ True False False  True  True False False]
+ [ True False  True  True False False False]
+ [ True  True  True  True False  True False]
+ [ True  True False  True  True  True  True]
+ [ True  True False False False  True  True]
+ [ True  True  True False False  True  True]]
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
@@ -1117,13 +1462,13 @@ SE 3x3 north (Trues may also have True above):
 
 
 test_images/test_image_005.bmp
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
 
 
@@ -1159,41 +1504,41 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on all sides):
 
    original ... 
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
    cross erode ... 
 [[ True False False False False False False]
+ [ True False False False False False False]
  [False False False False False False False]
  [False False False False False False False]
  [False False False False False False False]
- [ True  True False False False False False]
  [False False False False False False False]
  [False False False False False False False]]
 SE 3x3 north (only Trues which have True above as well):
 
    original ... 
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
    north erode ... 
-[[ True  True  True False False False  True]
- [ True False False False False False  True]
- [False False False False False False  True]
- [False  True False False False False  True]
- [ True  True False False False False False]
- [ True  True  True False  True False False]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False False False  True False]
+ [ True False False False False False False]
+ [ True False  True False False False False]
+ [False False False  True False  True False]
+ [False False False False False False False]
+ [False False False False False False False]]
 
 
 
@@ -1228,41 +1573,41 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
    cross dilate ... 
 [[ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
- [ True  True  True False  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
+ [ True  True  True  True False  True  True]
  [ True  True  True  True  True  True  True]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
-   north erode ... 
-[[ True  True  True False False False  True]
- [ True  True  True  True  True False  True]
- [ True  True False  True  True False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False  True]]
+   north dilate ... 
+[[ True  True False False  True  True False]
+ [ True  True False  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True False  True  True  True  True  True]
+ [ True False  True  True False  True  True]
+ [ True  True  True  True False  True False]
+ [ True  True  True  True False False  True]]
 
 
 
@@ -1297,41 +1642,110 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
-   cross dilate ... 
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True  True  True]
- [ True  True False False False  True  True]
- [ True  True  True False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
+   cross opening ... 
+[[ True  True False False False False False]
+ [ True  True False False False False False]
+ [ True False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True  True  True False False False  True]
- [ True False False  True  True False  True]
- [False  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True False]
- [ True  True  True False  True False  True]
- [False False False False  True False  True]]
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
 
-   north erode ... 
-[[ True  True  True False False False  True]
+   north opening ... 
+[[ True  True False False  True  True False]
+ [ True  True False False  True  True False]
+ [ True  True False False False  True False]
+ [ True False  True False False False False]
+ [ True False  True  True False  True False]
+ [False False False  True False  True False]
+ [False False False False False False False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
+
+   cross closing ... 
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True False  True  True]
  [ True  True  True False False False  True]
- [ True  True False  True  True False  True]
- [ True  True False False False False  True]
- [ True  True False False False False  True]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False  True]]
+ [ True  True  True  True False  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True  True False False  True  True False]
+ [ True  True False  True False  True  True]
+ [ True False  True False  True False False]
+ [ True False  True  True False  True  True]
+ [False False False  True False  True False]
+ [ True  True  True False False False False]
+ [False False False  True False False  True]]
+
+   north closing ... 
+[[ True  True False False  True  True False]
+ [ True  True False False  True  True False]
+ [ True  True False  True  True  True  True]
+ [ True False  True  True  True  True  True]
+ [ True False  True  True False  True  True]
+ [ True False  True  True False  True False]
+ [ True  True  True  True False False False]]
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
@@ -1339,235 +1753,13 @@ SE 3x3 north (Trues may also have True above):
 
 
 test_images/test_image_006.bmp
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-
-
-
-============ EROSION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on all sides):
-
-   original ... 
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-   cross erode ... 
-[[False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False  True False False False False False]
- [False  True False False False False False]
- [False False False False False False False]
- [False  True False False False False False]]
-SE 3x3 north (only Trues which have True above as well):
-
-   original ... 
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-   north erode ... 
-[[ True False False False  True  True False]
- [False False False False  True False False]
- [False  True False  True False False False]
- [False  True  True False False  True False]
- [ True  True  True False  True False False]
- [False  True False False  True False False]
- [False  True False  True False  True False]]
-
-
-
-============ DILATION TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-   cross dilate ... 
-[[ True  True False  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-   north erode ... 
-[[ True False False False  True  True False]
- [ True  True False  True  True  True  True]
- [False  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True  True  True]
- [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True False]]
-
-
-
-============ OPENING TEST ==============
-
-
-
-SE 1x1 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 5x5 identity (should all be True):
-[[ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 cross (only Trues which have True on any sides):
-
-   original ... 
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-   cross dilate ... 
-[[ True False False False  True  True  True]
- [ True  True False  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
-SE 3x3 north (Trues may also have True above):
-
-   original ... 
-[[ True False False False  True  True False]
- [False  True False  True  True False  True]
- [False  True  True  True False  True False]
- [ True  True  True False  True  True  True]
- [ True  True  True False  True False False]
- [False  True False  True  True  True False]
- [ True  True  True  True False  True False]]
-
-   north erode ... 
-[[ True False False False  True  True False]
- [ True False False False  True  True False]
- [False  True False  True  True  True  True]
- [False  True  True  True  True  True  True]
- [ True  True  True False  True  True  True]
+[[False False False  True  True False False]
  [ True  True  True False  True  True False]
- [ True  True  True  True  True  True False]]
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
-
-
-
-test_images/test_image_007.bmp
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
 
 
 
@@ -1603,13 +1795,13 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on all sides):
 
    original ... 
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
 
    cross erode ... 
 [[False False False False False False False]
@@ -1622,22 +1814,22 @@ SE 3x3 cross (only Trues which have True on all sides):
 SE 3x3 north (only Trues which have True above as well):
 
    original ... 
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
 
    north erode ... 
-[[False  True  True  True False False False]
- [False  True False  True False False False]
- [False False False False False False False]
- [ True False False False False False False]
- [False False False False False False False]
- [False False False  True False False False]
- [False False False False False False False]]
+[[False False False  True  True False False]
+ [False False False False  True False False]
+ [ True False False False  True  True False]
+ [False False False  True False  True False]
+ [False False  True False False False False]
+ [False False  True False False False False]
+ [False False  True False  True False False]]
 
 
 
@@ -1672,13 +1864,13 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
 
    cross dilate ... 
 [[ True  True  True  True  True  True False]
@@ -1686,27 +1878,27 @@ SE 3x3 cross (only Trues which have True on any sides):
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
- [ True False  True  True  True  True False]
- [ True  True  True  True False False False]]
+ [ True  True  True  True  True  True  True]
+ [False  True  True  True  True  True  True]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
 
-   north erode ... 
-[[False  True  True  True False False False]
- [False  True  True  True False  True False]
- [ True  True False  True  True  True  True]
- [ True  True  True False  True False  True]
+   north dilate ... 
+[[False False False  True  True False False]
  [ True  True  True  True  True  True False]
- [False False False  True  True  True False]
- [ True False  True  True False False False]]
+ [ True  True  True  True  True  True False]
+ [ True False  True  True  True  True False]
+ [ True False  True  True False  True  True]
+ [ True  True  True False  True False  True]
+ [False  True  True False  True  True False]]
 
 
 
@@ -1741,41 +1933,401 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
 
-   cross dilate ... 
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
+
+   north opening ... 
+[[False False False  True  True False False]
+ [False False False  True  True False False]
+ [ True False False False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [False False  True False False False False]
+ [False False  True False  True False False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
+
+   cross closing ... 
 [[ True  True  True  True  True False False]
  [ True  True  True  True  True  True False]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
- [ True False  True  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+ [ True  True  True  True  True  True  True]
+ [False  True  True  True  True  True  True]
+ [False False  True  True  True  True  True]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True False False False  True False  True]
- [ True  True  True False False False False]
- [False False False  True  True  True False]
- [False False False  True False False False]
- [ True False  True False False False False]]
+[[False False False  True  True False False]
+ [ True  True  True False  True  True False]
+ [ True False False  True  True  True False]
+ [False False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]
+ [False False  True False  True  True False]]
+
+   north closing ... 
+[[False False False  True  True False False]
+ [False False False  True  True False False]
+ [ True  True  True  True  True  True False]
+ [ True False  True  True  True  True False]
+ [ True False  True  True False  True False]
+ [ True False  True False False False  True]
+ [False  True  True False  True False False]]
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
+
+
+
+test_images/test_image_007.bmp
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+
+
+
+============ EROSION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on all sides):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   cross erode ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [ True False False False False False False]]
+SE 3x3 north (only Trues which have True above as well):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
 
    north erode ... 
-[[False  True  True  True False False False]
- [False  True  True  True False False False]
- [False  True False  True False  True False]
- [ True  True False False  True False  True]
- [ True  True  True False  True False False]
- [False False False  True  True  True False]
- [False False False  True False False False]]
+[[False False  True  True False False  True]
+ [False False False  True False False False]
+ [ True False False False False  True False]
+ [False False  True False False False False]
+ [False False  True False False False False]
+ [ True False  True False False  True False]
+ [ True False False  True False  True False]]
+
+
+
+============ DILATION TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   cross dilate ... 
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   north dilate ... 
+[[False False  True  True False False  True]
+ [ True  True  True  True False  True  True]
+ [ True  True  True  True False  True  True]
+ [ True False  True  True  True  True  True]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True False]]
+
+
+
+============ OPENING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   cross opening ... 
+[[False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [ True False False False False False False]
+ [ True  True False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   north opening ... 
+[[False False  True  True False False  True]
+ [False False  True  True False False  True]
+ [ True False False  True False  True False]
+ [ True False  True False False  True False]
+ [False False  True False False False False]
+ [ True False  True False False  True False]
+ [ True False  True  True False  True False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   cross closing ... 
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[False False  True  True False False  True]
+ [ True  True False  True False  True False]
+ [ True False  True False False  True  True]
+ [False False  True  True  True False False]
+ [ True  True  True False False  True False]
+ [ True False  True  True  True  True False]
+ [ True  True False  True False  True False]]
+
+   north closing ... 
+[[False False  True  True False False  True]
+ [False False  True  True False False  True]
+ [ True  True  True  True False  True  True]
+ [ True False  True  True False  True  True]
+ [ True False  True  True  True  True False]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True False]]
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
@@ -1783,13 +2335,13 @@ SE 3x3 north (Trues may also have True above):
 
 
 test_images/test_image_008.bmp
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
 
 
 
@@ -1825,41 +2377,41 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on all sides):
 
    original ... 
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
 
    cross erode ... 
-[[False False False False False False False]
+[[ True False False False False False False]
+ [ True False False False False False False]
+ [ True False False False False False False]
  [False False False False False False False]
  [False False False False False False False]
- [False False False False  True False False]
- [False False False False False  True False]
- [False False False False  True False  True]
- [ True  True False False False False False]]
+ [False False False False False False False]
+ [False False False False False False False]]
 SE 3x3 north (only Trues which have True above as well):
 
    original ... 
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
 
    north erode ... 
-[[False False False  True False  True False]
- [False False False False False False False]
- [False False False False False False False]
- [False  True False False  True  True False]
- [False False False False  True  True False]
- [False False False False  True  True  True]
- [ True  True  True False  True False  True]]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False False False False False]
+ [ True  True False  True False False False]
+ [False False False  True False False False]
+ [False False False False False  True False]
+ [False False False False False  True False]]
 
 
 
@@ -1894,41 +2446,41 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
 
    cross dilate ... 
-[[False False  True  True  True  True  True]
+[[ True  True  True False False  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
-
-   north erode ... 
-[[False False False  True False  True False]
- [False False  True  True False  True False]
- [ True  True  True False  True  True False]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
  [ True  True False  True  True  True False]
- [False  True False  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
+
+   north dilate ... 
+[[ True  True False False False False  True]
+ [ True  True False False False False  True]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True False  True False]
+ [ True  True False  True False  True  True]
+ [ True  True  True  True False  True  True]]
 
 
 
@@ -1963,41 +2515,110 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
 
-   cross dilate ... 
-[[False False False  True  True  True False]
- [False False  True  True  True False False]
+   cross opening ... 
+[[ True  True False False False False False]
+ [ True  True False False False False False]
+ [ True  True False False False False False]
+ [ True False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
+
+   north opening ... 
+[[ True  True False False False False  True]
+ [ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True False False False]
+ [ True  True False  True False False False]
+ [False False False  True False  True False]
+ [False False False False False  True False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
+ [False False False  True False  True False]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
+
+   cross closing ... 
+[[ True  True False False False False  True]
+ [ True  True  True False False  True  True]
  [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True False False]
+ [ True  True  True  True  True  True False]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[False False False  True False  True False]
- [False False  True False False False False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False False False False  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True  True  True False  True False  True]]
-
-   north erode ... 
-[[False False False  True False  True False]
+[[ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False False False]
  [False False False  True False  True False]
- [False False  True False False  True False]
- [ True  True False False  True  True False]
- [False  True False  True  True  True False]
- [False  True False  True  True  True  True]
- [ True  True  True  True  True  True  True]]
+ [ True  True False False False  True  True]
+ [False False  True  True False  True False]]
+
+   north closing ... 
+[[ True  True False False False False  True]
+ [ True  True False False False False  True]
+ [ True  True False False False False False]
+ [ True  True False  True  True  True False]
+ [ True  True  True  True False  True False]
+ [ True  True False  True False  True False]
+ [ True  True False  True False  True  True]]
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
 .-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-.-*-
@@ -2005,13 +2626,13 @@ SE 3x3 north (Trues may also have True above):
 
 
 test_images/test_image_009.bmp
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
 
 
@@ -2047,41 +2668,41 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on all sides):
 
    original ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
    cross erode ... 
-[[ True False  True False False False False]
+[[False  True False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
+ [False False False False False False False]
  [False False False  True False False False]
- [ True False False False  True False False]
  [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]
- [False False False False False False False]]
+ [ True False False False False False False]]
 SE 3x3 north (only Trues which have True above as well):
 
    original ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
    north erode ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True False False False]
- [ True False  True  True  True False False]
- [ True  True False False  True False False]
- [False False False False  True False  True]
- [False False False  True False False False]
- [False False False False False False False]]
+[[ True  True  True False False  True False]
+ [False  True  True False False  True False]
+ [False  True False False False  True False]
+ [False  True False False False False False]
+ [False  True  True  True  True False False]
+ [False  True False  True  True False False]
+ [ True  True False False False False False]]
 
 
 
@@ -2116,41 +2737,41 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
    cross dilate ... 
 [[ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True False]
  [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [ True False  True  True  True  True  True]
- [ True  True False  True  True  True  True]]
+ [ True  True  True  True  True  True False]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
-   north erode ... 
-[[ True  True  True  True False  True  True]
- [ True  True  True  True  True  True  True]
+   north dilate ... 
+[[ True  True  True False False  True False]
  [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [ True  True  True  True  True  True  True]
- [False False  True  True  True  True  True]
- [ True False False  True  True  True False]]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True  True False]
+ [False  True  True  True  True False False]
+ [ True  True  True  True  True  True False]
+ [ True  True False  True  True  True False]]
 
 
 
@@ -2185,38 +2806,107 @@ SE 5x5 identity (should all be True):
 SE 3x3 cross (only Trues which have True on any sides):
 
    original ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
-   cross dilate ... 
+   cross opening ... 
+[[ True  True  True False False False False]
+ [False  True False False False False False]
+ [False False False False False False False]
+ [False False False  True False False False]
+ [False False  True  True  True False False]
+ [ True False False  True False False False]
+ [ True  True False False False False False]]
+SE 3x3 north (Trues may also have True above):
+
+   original ... 
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
+
+   north opening ... 
+[[ True  True  True False False  True False]
+ [ True  True  True False False  True False]
+ [False  True  True False False  True False]
+ [False  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True False False]]
+
+
+
+============ CLOSING TEST ==============
+
+
+
+SE 1x1 identity (should all be True):
 [[ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
  [ True  True  True  True  True  True  True]
- [ True False  True  True  True  True  True]
- [False False False  True  True  True  True]
- [ True False False False  True  True  True]]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 5x5 identity (should all be True):
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]]
+SE 3x3 cross (only Trues which have True on any sides):
+
+   original ... 
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
+
+   cross closing ... 
+[[ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True False False]
+ [ True  True  True  True  True False False]
+ [ True  True  True  True  True  True False]
+ [ True  True  True  True  True False False]]
 SE 3x3 north (Trues may also have True above):
 
    original ... 
-[[ True  True  True  True False  True  True]
- [ True False  True  True  True False False]
- [ True  True  True  True  True  True False]
- [ True  True False False  True False  True]
- [False False  True  True  True  True  True]
- [False False False  True False False False]
- [ True False False False  True  True False]]
+[[ True  True  True False False  True False]
+ [False  True  True  True  True  True False]
+ [ True  True False False False  True False]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]
+ [ True  True False False False False False]]
 
-   north erode ... 
-[[ True  True  True  True False  True  True]
- [ True  True  True  True False  True  True]
+   north closing ... 
+[[ True  True  True False False  True False]
+ [ True  True  True False False  True False]
  [ True  True  True  True  True  True False]
  [ True  True  True  True  True  True False]
- [ True  True  True  True  True  True  True]
- [False False  True  True  True  True  True]
- [False False False  True  True  True False]]
+ [False  True  True  True  True False False]
+ [False  True  True  True  True False False]
+ [ True  True False  True  True  True False]]
