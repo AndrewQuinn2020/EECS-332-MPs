@@ -35,7 +35,7 @@ def reveal_images():
     print("    Images in test_images/:")
     for test_image in [os.path.join(test_images_dir, f) for f in
                        os.listdir(test_images_dir)]:
-        print("        " + image)
+        print("        " + test_image)
 
     return None
 
@@ -60,7 +60,7 @@ def load_gs(img):
 
 
 def save_gs(data, filename, dir=results_dir, ext=".bmp"):
-    save_loc = os.path.join(results_dir, filename + ext)
+    save_loc = os.path.join(dir, filename + ext)
     im = Image.fromarray(data.astype(np.uint8), 'L')
     im.save(save_loc)
     return save_loc

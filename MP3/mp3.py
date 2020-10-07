@@ -32,7 +32,7 @@ def hist2matrix(hist):
     """Returns a |hist|-by-2 matrix, with keys on top and values on bottom."""
 
     m = np.zeros((len(hist), 2)).astype(int)
-    print(m.shape)
+    # print(m.shape)
 
     c = 0
     for key in sorted(hist.keys()):
@@ -51,7 +51,7 @@ def matrix2cmd(matrix_in):
     c = 0
     for i in range(0,matrix_in.shape[0]):
         c += matrix_in[i, 1]
-        print(c)
+        # print(c)
         matrix_out[i, 0] = matrix_in[i, 0]
         matrix_out[i, 1] = c
     return matrix_out
@@ -73,6 +73,36 @@ def cmd2dict(cmd_in):
 if __name__ == "__main__":
     hello()
 
+    for image in test_images:
+        img_data = load_gs(image)
+        hist_data = img2dict(img_data)
+        # plt.bar(list(hist_data.keys()), hist_data.values(), color='g')
+        # plt.show(block=False)
+        # plt.close()
+
+        hist = hist2matrix(hist_data)
+        # plt.bar(list(hist[:,0]), list(hist[:,1]))
+        # plt.show(block=False)
+
+        hist_cmd = matrix2cmd(hist)
+        # print(hist)
+        print(hist_cmd)
+
+        hist_eq_dict = cmd2dict(hist_cmd)
+        print(hist_eq_dict)
+
+        results_data = np.zeros_like(img_data).astype(int)
+
+        for i in range(0, results_data.shape[0]):
+            for j in range(0, results_data.shape[1]):
+                results_data[i,j] = hist_eq_dict[img_data[i,j]]
+
+        print(results_data)
+
+        test_results_path = save_gs(results_data, Path(image).stem,
+                                    dir=test_results_dir)
+        print("Processed image saved: {}".format(test_results_path))
+
     for image in images:
         img_data = load_gs(image)
         hist_data = img2dict(img_data)
@@ -85,8 +115,8 @@ if __name__ == "__main__":
         # plt.show(block=False)
 
         hist_cmd = matrix2cmd(hist)
-        print(hist)
-        print(hist_cmd)
+        # print(hist)
+        # print(hist_cmd)
 
         hist_eq_dict = cmd2dict(hist_cmd)
 
@@ -96,7 +126,7 @@ if __name__ == "__main__":
             for j in range(0, results_data.shape[1]):
                 results_data[i,j] = hist_eq_dict[img_data[i,j]]
 
-        print(results_data)
+        # print(results_data)
 
         results_path = save_gs(results_data, Path(image).stem)
         print("Processed image saved: {}".format(results_path))
