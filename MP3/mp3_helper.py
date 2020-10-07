@@ -16,6 +16,10 @@ test_results_dir = os.path.join(script_dir, 'test_results')
 
 subdirs = [images_dir, results_dir, test_images_dir, test_results_dir]
 
+for subdir in subdirs:
+    if not os.path.exists(subdir):
+        os.makedirs(subdir)
+
 images = [os.path.join(images_dir, f) for f in os.listdir(images_dir)]
 test_images = [os.path.join(test_images_dir, f) for f in
                    os.listdir(test_images_dir)]

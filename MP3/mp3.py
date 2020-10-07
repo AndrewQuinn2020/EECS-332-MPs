@@ -8,7 +8,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 from pathlib import Path
-from math import floor
 
 
 np.set_printoptions(threshold=sys.maxsize)
@@ -17,8 +16,10 @@ np.set_printoptions(linewidth=1000)
 
 def img2dict(data):
     """Construct a histogram of the count of every value found in the
-    2D array data, in a dictionary."""
+    2D array data, in a dictionary, along with the minimum and maximum
+    greyscale value it found in the data."""
     hist_data = {}
+
     for i in range(0, data.shape[0]):
         for j in range(0, data.shape[1]):
             if data[i, j] not in hist_data.keys():
@@ -57,14 +58,13 @@ def matrix2cmd(matrix_in):
     return matrix_out
 
 
-def cmd2dict(cmd_in):
+def cmd2dict(cmd):
     """Returns a dictionary of what to replace each value by."""
-    cmd_max = cmd_in[cmd_in.shape[0]-1, cmd_in.shape[1]-1]
+    pixel_count = cmd[cmd.shape[0]-1, cmd.shape[1]-1]
     scaling_dict = dict()
 
-    for i in range(0, cmd_in.shape[0]):
-        scaling_dict[cmd_in[i, 0]] = floor(cmd_in[i, 0] * (cmd_in[i, 1] / cmd_max))
-
+    for i in range(0, cmd.shape[0]):
+        scaling_dict[cmd[i, 0]] = round(((cmd[i, 1] - cmd[0,1])/(pixel_count - cmd[0,1])) * 255)
     return scaling_dict
 
 
@@ -76,11 +76,11 @@ if __name__ == "__main__":
     for image in test_images:
         img_data = load_gs(image)
         hist_data = img2dict(img_data)
-        # plt.bar(list(hist_data.keys()), hist_data.values(), color='g')
-        # plt.show(block=False)
-        # plt.close()
+        # plt.bar(list(hist_data.keys()), hist_data.values(), color='g', alpha=0.3)
+        # # plt.close()
 
         hist = hist2matrix(hist_data)
+        print(hist)
         # plt.bar(list(hist[:,0]), list(hist[:,1]))
         # plt.show(block=False)
 
@@ -96,6 +96,12 @@ if __name__ == "__main__":
         for i in range(0, results_data.shape[0]):
             for j in range(0, results_data.shape[1]):
                 results_data[i,j] = hist_eq_dict[img_data[i,j]]
+
+        results_hist = img2dict(results_data)
+
+        # plt.plot(list(results_hist.keys()), results_hist.values(), color='b', alpha=0.3)
+        # plt.show()
+        # plt.close()
 
         print(results_data)
 
@@ -125,8 +131,6 @@ if __name__ == "__main__":
         for i in range(0, results_data.shape[0]):
             for j in range(0, results_data.shape[1]):
                 results_data[i,j] = hist_eq_dict[img_data[i,j]]
-
-        # print(results_data)
 
         results_path = save_gs(results_data, Path(image).stem)
         print("Processed image saved: {}".format(results_path))
