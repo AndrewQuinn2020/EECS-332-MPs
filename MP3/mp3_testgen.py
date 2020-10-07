@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import sys
 from pathlib import Path
 from math import floor
+from random import randint
 
 
 np.set_printoptions(threshold=sys.maxsize)
@@ -24,14 +25,15 @@ if __name__ == "__main__":
     print("We are going to generate a bunch of small bitmaps with colors")
     print("differing by small values.")
     print("\n\nThe name \"test_image_4_xxx.bmp\" indicates 4 different")
-    print("shades of very dark black; once you histogram EQ it they should")
+    print("shades you probably can't see; once you histogram EQ it they should")
     print("fill all or almost all of the whole spectrum. For example,")
     print("a properly histogram EQ'd test_image_2_000.bmp should be pure")
-    print("black and pure white.")
+    print("black and pure white.")g
 
     for x in range(2, 5):
         for i in range(0, 5):
             new_bmp = np.random.choice(a=list(range(0,x)), size=image_dimensions).astype(np.uint8)
+            new_bmp = new_bmp + randint(0, 256-x)
             print(new_bmp)
             im = Image.fromarray(new_bmp, 'L')
 

@@ -14,6 +14,7 @@ results_dir = os.path.join(script_dir, 'results')
 test_images_dir = os.path.join(script_dir, "test_images")
 test_results_dir = os.path.join(script_dir, 'test_results')
 
+
 subdirs = [images_dir, results_dir, test_images_dir, test_results_dir]
 
 for subdir in subdirs:

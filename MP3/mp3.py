@@ -43,6 +43,9 @@ def hist2matrix(hist):
 
     return m
 
+
+
+
 def matrix2cmd(matrix_in):
     """Given an n*2 matrix of keys in column 0 and integer values in column
     1, returns a new n*2 matrix of the same keys, but the values have been
@@ -57,6 +60,24 @@ def matrix2cmd(matrix_in):
         matrix_out[i, 1] = c
     return matrix_out
 
+
+def cmd2plottable(cmd_in):
+    """Given the output of matrix2cmd, constructs a 256*2 matrix for plotting
+    the cumulative distribution function."""
+    matrix_out = np.zeros((256, 2))
+
+    cumval = 0
+    nextval = 0
+    for i in range(0, 256):
+        matrix_out[i, 0] = i
+        matrix_out[i, 1] = cumval
+        if matrix_out[i, 0] == cmd_in[nextval, 0]:
+            matrix_out[i, 1] = cmd_in[nextval, 1]
+            cumval = matrix_out[i, 1]
+            if nextval < cmd_in.shape[0] - 1:
+                nextval += 1
+
+    return matrix_out
 
 def cmd2dict(cmd):
     """Returns a dictionary of what to replace each value by."""
@@ -76,20 +97,11 @@ if __name__ == "__main__":
     for image in test_images:
         img_data = load_gs(image)
         hist_data = img2dict(img_data)
-        # plt.bar(list(hist_data.keys()), hist_data.values(), color='g', alpha=0.3)
-        # # plt.close()
 
         hist = hist2matrix(hist_data)
-        print(hist)
-        # plt.bar(list(hist[:,0]), list(hist[:,1]))
-        # plt.show(block=False)
-
         hist_cmd = matrix2cmd(hist)
-        # print(hist)
-        print(hist_cmd)
-
+        plottable_cmd = cmd2plottable(hist_cmd)
         hist_eq_dict = cmd2dict(hist_cmd)
-        print(hist_eq_dict)
 
         results_data = np.zeros_like(img_data).astype(int)
 
@@ -99,30 +111,18 @@ if __name__ == "__main__":
 
         results_hist = img2dict(results_data)
 
-        # plt.plot(list(results_hist.keys()), results_hist.values(), color='b', alpha=0.3)
-        # plt.show()
-        # plt.close()
-
-        print(results_data)
-
         test_results_path = save_gs(results_data, Path(image).stem,
                                     dir=test_results_dir)
+
         print("Processed image saved: {}".format(test_results_path))
 
     for image in images:
         img_data = load_gs(image)
         hist_data = img2dict(img_data)
-        # plt.bar(list(hist_data.keys()), hist_data.values(), color='g')
-        # plt.show(block=False)
-        # plt.close()
 
         hist = hist2matrix(hist_data)
-        # plt.bar(list(hist[:,0]), list(hist[:,1]))
-        # plt.show(block=False)
-
         hist_cmd = matrix2cmd(hist)
-        # print(hist)
-        # print(hist_cmd)
+        plottable_cmd = cmd2plottable(hist_cmd)
 
         hist_eq_dict = cmd2dict(hist_cmd)
 
