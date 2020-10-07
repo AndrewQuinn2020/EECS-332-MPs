@@ -2,6 +2,11 @@
 
 import os.path
 
+from PIL import Image
+import numpy as np
+from pathlib import Path
+
+
 
 script_dir = os.path.dirname(__file__)
 images_dir = os.path.join(script_dir, "images")
@@ -10,6 +15,11 @@ test_images_dir = os.path.join(script_dir, "test_images")
 test_results_dir = os.path.join(script_dir, 'test_results')
 
 subdirs = [images_dir, results_dir, test_images_dir, test_results_dir]
+
+images = [os.path.join(images_dir, f) for f in os.listdir(images_dir)]
+test_images = [os.path.join(test_images_dir, f) for f in
+                   os.listdir(test_images_dir)]
+
 
 
 def reveal_images():
@@ -40,6 +50,19 @@ def hello():
             os.makedirs(subdir)
 
     reveal_images()
+
+
+
+
+def load_gs(img):
+    return np.array(Image.open(img).convert('L')).astype(int)
+
+
+def save_gs(data, filename, dir=results_dir, ext=".bmp"):
+    save_loc = os.path.join(results_dir, filename + ext)
+    im = Image.fromarray(data.astype(np.uint8), 'L')
+    im.save(save_loc)
+    return save_loc
 
 
 if __name__ == "__main__":
