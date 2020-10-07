@@ -50,8 +50,9 @@ def hello():
             os.makedirs(subdir)
 
     reveal_images()
+    print("")
 
-
+    return None
 
 
 def load_gs(img):
