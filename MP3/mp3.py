@@ -110,22 +110,34 @@ if __name__ == "__main__":
                 results_data[i,j] = hist_eq_dict[img_data[i,j]]
 
         results_hist = img2dict(results_data)
+        results_hist_matrix = hist2matrix(results_hist)
+        results_hist_cmd = matrix2cmd(results_hist_matrix)
+        plottable_results_cmd = cmd2plottable(results_hist_cmd)
+
 
         test_results_path = save_gs(results_data, Path(image).stem,
                                     dir=test_results_dir)
 
-        print("Processed image saved: {}".format(test_results_path))
+        print("Processed image saved to: {}".format(test_results_path))
 
         # Let's plot some histograms.
         fig = plt.figure()
         ax1 = fig.add_subplot(111)
         ax1.set_title("Pixels per color value: `{}`".format(Path(image).stem + ".bmp"))
         ax1.set_xlabel("Pixel color value ($v \in \{0, 1, \dots, 255\}$)")
-        ax1.set_ylabel("Number of pixels")
-        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.3, color='r', label="Original")
-        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.3, color='b', label="EQ'd")
-        plt.legend()
+        ax1.set_ylabel("# / pixels per grayscale value")
+        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.6, color='r', label="Original")
+        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.6, color='b', label="EQ'd")
+
+        ax2 = ax1.twinx()
+        ln3 = ax2.bar(plottable_cmd[:,0], plottable_cmd[:,1], alpha=0.1,
+                          color='g', label="cdf (Original)")
+        ln4 = ax2.bar(plottable_results_cmd[:,0], plottable_results_cmd[:,1],
+                          alpha=0.1, color='purple', label="cdf (EQ'd)")
+
+        plt.legend([ln1, ln2, ln3, ln4], [ln1.get_label(), ln2.get_label(), ln3.get_label(), ln4.get_label()])
         plt.tight_layout()
+
         plt.savefig(os.path.join(test_results_dir, Path(image).stem + "_hist.svg"))
         plt.savefig(os.path.join(test_results_dir, Path(image).stem + "_hist.jpg"))
         plt.close()
@@ -147,6 +159,9 @@ if __name__ == "__main__":
                 results_data[i,j] = hist_eq_dict[img_data[i,j]]
 
         results_hist = img2dict(results_data)
+        results_hist_matrix = hist2matrix(results_hist)
+        results_hist_cmd = matrix2cmd(results_hist_matrix)
+        plottable_results_cmd = cmd2plottable(results_hist_cmd)
 
         results_path = save_gs(results_data, Path(image).stem)
         print("Processed image saved: {}".format(results_path))
@@ -157,10 +172,18 @@ if __name__ == "__main__":
         ax1.set_title("Pixels per color value: `{}`".format(Path(image).stem + ".bmp"))
         ax1.set_xlabel("Pixel color value ($v \in \{0, 1, \dots, 255\}$)")
         ax1.set_ylabel("Number of pixels")
-        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.3, color='r', label="Original")
-        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.3, color='b', label="EQ'd")
-        plt.legend()
+        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.6, color='r', label="Original")
+        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.6, color='b', label="EQ'd")
+
+        ax2 = ax1.twinx()
+        ln3 = ax2.bar(plottable_cmd[:,0], plottable_cmd[:,1], alpha=0.1,
+                          color='g', label="cdf (Original)")
+        ln4 = ax2.bar(plottable_results_cmd[:,0], plottable_results_cmd[:,1],
+                          alpha=0.1, color='purple', label="cdf (EQ'd)")
+
+        plt.legend([ln1, ln2, ln3, ln4], [ln1.get_label(), ln2.get_label(), ln3.get_label(), ln4.get_label()])
         plt.tight_layout()
+
         plt.savefig(os.path.join(results_dir, Path(image).stem + "_hist.svg"))
         plt.savefig(os.path.join(results_dir, Path(image).stem + "_hist.jpg"))
         plt.close()
