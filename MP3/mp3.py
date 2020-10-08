@@ -116,6 +116,20 @@ if __name__ == "__main__":
 
         print("Processed image saved: {}".format(test_results_path))
 
+        # Let's plot some histograms.
+        fig = plt.figure()
+        ax1 = fig.add_subplot(111)
+        ax1.set_title("Pixels per color value: `{}`".format(Path(image).stem + ".bmp"))
+        ax1.set_xlabel("Pixel color value ($v \in \{0, 1, \dots, 255\}$)")
+        ax1.set_ylabel("Number of pixels")
+        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.3, color='r', label="Original")
+        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.3, color='b', label="EQ'd")
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(os.path.join(test_results_dir, Path(image).stem + "_hist.svg"))
+        plt.savefig(os.path.join(test_results_dir, Path(image).stem + "_hist.jpg"))
+        plt.close()
+
     for image in images:
         img_data = load_gs(image)
         hist_data = img2dict(img_data)
@@ -132,5 +146,21 @@ if __name__ == "__main__":
             for j in range(0, results_data.shape[1]):
                 results_data[i,j] = hist_eq_dict[img_data[i,j]]
 
+        results_hist = img2dict(results_data)
+
         results_path = save_gs(results_data, Path(image).stem)
         print("Processed image saved: {}".format(results_path))
+
+        # Let's plot some histograms.
+        fig = plt.figure()
+        ax1 = fig.add_subplot(111)
+        ax1.set_title("Pixels per color value: `{}`".format(Path(image).stem + ".bmp"))
+        ax1.set_xlabel("Pixel color value ($v \in \{0, 1, \dots, 255\}$)")
+        ax1.set_ylabel("Number of pixels")
+        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.3, color='r', label="Original")
+        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.3, color='b', label="EQ'd")
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(os.path.join(results_dir, Path(image).stem + "_hist.svg"))
+        plt.savefig(os.path.join(results_dir, Path(image).stem + "_hist.jpg"))
+        plt.close()
