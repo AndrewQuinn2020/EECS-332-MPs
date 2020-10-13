@@ -25,7 +25,10 @@ se_north_3    = np.array([[False, True,  False],
                           [False, False, False]])
 se_glider_3    = np.array([[False, True,  False],
                            [True, False,  False],
-                           [True, True, True]])
+                           [True, True,  True]])
+se_block_3    = np.array([[True,  True,   True],
+                          [True,  True,   True],
+                          [True,  True,   True]])
 
 structural_elements = [se_identity_1, se_cross_3, se_north_3, se_glider_3]
 

@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 from colorsys import hsv_to_rgb
+import mp2
 
 try:
     import cPickle as pickle
@@ -128,3 +129,14 @@ if __name__ == "__main__":
             logger.debug("Saving HSV mask to {}".format(save_loc))
             im = Image.fromarray(array_hsv2rgb(image_out_hsv))
             im.save(save_loc)
+
+            # mask_rgb_opened = mp2.opening(mask_rgb, mp2.se_block_3)
+            # for i in range(0, 10):
+            #     mask_rgb_opened = mp2.closing(mask_rgb_opened, mp2.se_block_3)
+            # image_out_rgb_open = apply_hard_mask(image_array_rgb, mask_rgb_opened)
+            #
+            # save_loc = os.path.join(results_dir, name[:-4] + "_rgb_hard_mask_open.bmp")
+            # logger.debug("Saving RGB mask to {}".format(save_loc))
+            # im = Image.fromarray(image_out_rgb_open)
+            # im.save(save_loc)
+            # break
