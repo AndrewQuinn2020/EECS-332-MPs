@@ -101,7 +101,7 @@ if __name__ == "__main__":
     hist_hv = pickle.load( open( os.path.join(hist_output_dir, "hist_hv.pickle"), "rb"))
     hist_sv = pickle.load( open( os.path.join(hist_output_dir, "hist_sv.pickle"), "rb"))
 
-    global_threshold = round(hist_rgb['size'] * 0.00001)
+    global_threshold = round(hist_rgb['size'] * 0.000001)
 
     for path, subdirs, files in os.walk(images_dir):
         for name in files:
