@@ -46,12 +46,44 @@ def array2tuples(img_array):
 
     return return_array
 
+def array2tuples_2d(img_array, val1=0, val2=1):
+    """Given a 2-dimensional array of vectors length 3, returns a 2d array
+    of tuples length 2, dropping one of the 3 values to instead store just
+    (img_array[i, j, val1], img_array[i, j, val2]).
+
+    I just prefer to work with tuples because they're hashable and play nice
+    with dictionaries in Python. The up front cost isn't that great."""
+    return_array = np.zeros((img_array.shape[0], img_array.shape[1]), dtype=(type((1,2))))
+    for i in range(0, img_array.shape[0]):
+        for j in range(0, img_array.shape[1]):
+            tuple_in = (img_array[i, j, val1], img_array[i, j, val2])
+            return_array[i, j] = tuple_in
+
+    return return_array
+
 
 def create_hard_mask_3d(img, hist, threshold=0):
     """Given a dictionary of 3-tuples and a dictionary of 3-tuples which
     returns histogram values, return an array of 0s and 1s with the same
     dimensions as img based on whether the pixel at img[i, j] met or
     exceeded the threshold.
+
+    If the pixel value isn't found in the dictionary at all, it defaults
+    to 0."""
+    mask = np.zeros((img.shape[0], img.shape[1]), dtype=int)
+    for i in range(0, img.shape[0]):
+        for j in range(0, img.shape[1]):
+            if img[i, j] in hist:
+                if hist[img[i,j]] > threshold:
+                    mask[i, j] = 1
+    return mask
+
+
+def create_hard_mask_2d(img, hist, threshold=0):
+    """Given an array of 2-tuples and a dictionary of 2-tuple keys,
+    return an array of 0s and 1s with the same dimensions as img based on
+    wether the 2-tuple at img[i,j] met or exceeded the threshold when looked
+    up in hist.
 
     If the pixel value isn't found in the dictionary at all, it defaults
     to 0."""
@@ -101,7 +133,7 @@ if __name__ == "__main__":
     hist_hv = pickle.load( open( os.path.join(hist_output_dir, "hist_hv.pickle"), "rb"))
     hist_sv = pickle.load( open( os.path.join(hist_output_dir, "hist_sv.pickle"), "rb"))
 
-    global_threshold = round(hist_rgb['size'] * 0.000001)
+    global_threshold = round(hist_rgb['size'] * 0.00005)
 
     for path, subdirs, files in os.walk(images_dir):
         for name in files:
@@ -112,6 +144,7 @@ if __name__ == "__main__":
             image_array_hsv = np.array(Image.open(img).convert("HSV"))
             image_array_rgb_tupled = array2tuples(image_array_rgb)
             image_array_hsv_tupled = array2tuples(image_array_hsv)
+            image_array_hs_tupled = array2tuples_2d(image_array_hsv)
 
             mask_rgb = create_hard_mask_3d(image_array_rgb_tupled, hist_rgb, global_threshold)
             image_out_rgb = apply_hard_mask(image_array_rgb, mask_rgb)
@@ -130,13 +163,25 @@ if __name__ == "__main__":
             im = Image.fromarray(array_hsv2rgb(image_out_hsv))
             im.save(save_loc)
 
-            # mask_rgb_opened = mp2.opening(mask_rgb, mp2.se_block_3)
-            # for i in range(0, 10):
-            #     mask_rgb_opened = mp2.closing(mask_rgb_opened, mp2.se_block_3)
-            # image_out_rgb_open = apply_hard_mask(image_array_rgb, mask_rgb_opened)
-            #
-            # save_loc = os.path.join(results_dir, name[:-4] + "_rgb_hard_mask_open.bmp")
-            # logger.debug("Saving RGB mask to {}".format(save_loc))
-            # im = Image.fromarray(image_out_rgb_open)
-            # im.save(save_loc)
-            # break
+            mask_hs = create_hard_mask_2d(image_array_hs_tupled, hist_hs, global_threshold)
+            image_out_hs = apply_hard_mask(image_array_hsv, mask_hs)
+
+
+            save_loc = os.path.join(results_dir, name[:-4] + "_hs_mask.bmp")
+            logger.debug("Saving HS mask to {}".format(save_loc))
+            im = Image.fromarray(array_hsv2rgb(image_out_hs))
+            im.save(save_loc)
+
+
+            mask_hs = mp2.erode(mask_hs, mp2.se_cross_3)
+            # mask_hs = mp2.erode(mask_hs, mp2.se_shield_5)
+            mask_hs = mp2.dilate(mask_hs, mp2.se_circle_5)
+            mask_hs = mp2.dilate(mask_hs, mp2.se_circle_5)
+            mask_hs = mp2.dilate(mask_hs, mp2.se_circle_5)
+            image_out_hs = apply_hard_mask(image_array_hsv, mask_hs)
+
+
+            save_loc = os.path.join(results_dir, name[:-4] + "_hs_mask_morphed.bmp")
+            logger.debug("Saving HS mask to {}".format(save_loc))
+            im = Image.fromarray(array_hsv2rgb(image_out_hs))
+            im.save(save_loc)
