@@ -58,7 +58,8 @@ def create_hard_mask_3d(img, hist, threshold=0):
     for i in range(0, img.shape[0]):
         for j in range(0, img.shape[1]):
             if img[i, j] in hist:
-                mask[i, j] = 1
+                if hist[img[i,j]] > threshold:
+                    mask[i, j] = 1
     return mask
 
 
@@ -98,7 +99,9 @@ if __name__ == "__main__":
     hist_hs = pickle.load( open( os.path.join(hist_output_dir, "hist_hs.pickle"), "rb"))
     hist_hv = pickle.load( open( os.path.join(hist_output_dir, "hist_hv.pickle"), "rb"))
     hist_sv = pickle.load( open( os.path.join(hist_output_dir, "hist_sv.pickle"), "rb"))
-    
+
+    global_threshold = round(hist_rgb['size'] * 0.00001)
+
     for path, subdirs, files in os.walk(images_dir):
         for name in files:
             img = os.path.join(path, name)
@@ -109,7 +112,7 @@ if __name__ == "__main__":
             image_array_rgb_tupled = array2tuples(image_array_rgb)
             image_array_hsv_tupled = array2tuples(image_array_hsv)
 
-            mask_rgb = create_hard_mask_3d(image_array_rgb_tupled, hist_rgb)
+            mask_rgb = create_hard_mask_3d(image_array_rgb_tupled, hist_rgb, global_threshold)
             image_out_rgb = apply_hard_mask(image_array_rgb, mask_rgb)
 
             save_loc = os.path.join(results_dir, name[:-4] + "_rgb_mask.bmp")
@@ -118,7 +121,7 @@ if __name__ == "__main__":
             im.save(save_loc)
 
 
-            mask_hsv = create_hard_mask_3d(image_array_hsv_tupled, hist_hsv)
+            mask_hsv = create_hard_mask_3d(image_array_hsv_tupled, hist_hsv, global_threshold)
             image_out_hsv = apply_hard_mask(image_array_hsv, mask_hsv)
 
             save_loc = os.path.join(results_dir, name[:-4] + "_hsv_mask.bmp")
