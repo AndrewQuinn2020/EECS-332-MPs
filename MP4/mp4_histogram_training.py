@@ -11,7 +11,6 @@ except ImportError:  # Python 3.x
 
 from PIL import Image
 import numpy as np
-from pathlib import Path
 
 import colorlog
 
