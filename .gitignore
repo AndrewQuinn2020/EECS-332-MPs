@@ -131,3 +131,4 @@ dmypy.json
 # Special to this project.
 *gs*
 *output.txt
+*histogram_training_images*
