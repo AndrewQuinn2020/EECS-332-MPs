@@ -3,8 +3,8 @@
 import os
 import sys
 
-from PIL import Image
 import numpy as np
+from PIL import Image
 
 np.set_printoptions(threshold=sys.maxsize)
 

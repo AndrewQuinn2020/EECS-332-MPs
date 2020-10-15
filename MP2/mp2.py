@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 
 
+import itertools
 import os
 import sys
-import itertools
-from PIL import Image
-import numpy as np
 from pathlib import Path
 
+import numpy as np
+from PIL import Image
 
 np.set_printoptions(threshold=sys.maxsize)
 np.set_printoptions(linewidth=1000)
@@ -17,17 +17,14 @@ images_dir = os.path.join(script_dir, "images")
 images = [os.path.join(images_dir, f) for f in os.listdir(images_dir)]
 
 se_identity_1 = np.array([[True]])
-se_cross_3    = np.array([[False, True,  False],
-                          [True,  True,   True],
-                          [False, True,  False]])
-se_north_3    = np.array([[False, True,  False],
-                          [False, True,  False],
-                          [False, False, False]])
-se_glider_3    = np.array([[False, True,  False],
-                           [True, False,  False],
-                           [True, True, True]])
+se_cross_3 = np.array([[False, True, False], [True, True, True], [False, True, False]])
+se_north_3 = np.array(
+    [[False, True, False], [False, True, False], [False, False, False]]
+)
+se_glider_3 = np.array([[False, True, False], [True, False, False], [True, True, True]])
 
 structural_elements = [se_identity_1, se_cross_3, se_north_3, se_glider_3]
+
 
 def namestr(obj, namespace=globals()):
     return [name for name in namespace if namespace[name] is obj]
@@ -36,8 +33,8 @@ def namestr(obj, namespace=globals()):
 def neighborhood_coordinates(img, x, y, dx=1, dy=1):
     """Given a distance out, returns the checkable neighborhood around a
     pixel for an image."""
-    x_nbhd = list(range( x - dx, x + dx + 1))
-    y_nbhd = list(range( y - dy, y + dy + 1))
+    x_nbhd = list(range(x - dx, x + dx + 1))
+    y_nbhd = list(range(y - dy, y + dy + 1))
 
     x_nbhd = filter(lambda x: x >= 0 and x < img.shape[0], x_nbhd)
     y_nbhd = filter(lambda x: x >= 0 and x < img.shape[1], y_nbhd)
@@ -57,6 +54,7 @@ def check_if_se_coordinate_valid(img, se, x, y, i, j):
 
     return x_yes and y_yes
 
+
 def eroded_pixel(img, se, x, y, verbose=False):
     """Returns the post-erosion value of the pixel.
 
@@ -72,7 +70,7 @@ def eroded_pixel(img, se, x, y, verbose=False):
     # for (x, y) in where_to_check:
 
     if verbose:
-        print("Determining whether {} is active...".format((x,y)))
+        print("Determining whether {} is active...".format((x, y)))
 
     for i in range(0, se.shape[0]):
         if not return_bool:
@@ -81,14 +79,24 @@ def eroded_pixel(img, se, x, y, verbose=False):
             if not return_bool:
                 break
             if check_if_se_coordinate_valid(img, se, x, y, i, j):
-                comp = (x + i - se.shape[0]//2,
-                        y + j - se.shape[1]//2)
+                comp = (x + i - se.shape[0] // 2, y + j - se.shape[1] // 2)
                 if verbose:
-                    print("  Cross-checking absolute image pixel ({}, {}) against SE pixel ({}, {}).".format(comp[0],comp[1],i,j), end="    ")
+                    print(
+                        "  Cross-checking absolute image pixel ({}, {}) against SE pixel ({}, {}).".format(
+                            comp[0], comp[1], i, j
+                        ),
+                        end="    ",
+                    )
 
                 if se[i, j]:
                     if verbose:
-                        print("Pixel active, assigning... {} && {} == {}.".format(img[comp[0], comp[1]], se[i, j], (img[comp[0], comp[1]] and se[i, j])))
+                        print(
+                            "Pixel active, assigning... {} && {} == {}.".format(
+                                img[comp[0], comp[1]],
+                                se[i, j],
+                                (img[comp[0], comp[1]] and se[i, j]),
+                            )
+                        )
                     return_bool = return_bool and (img[comp[0], comp[1]] and se[i, j])
                 else:
                     if verbose:
@@ -110,7 +118,6 @@ def erode(img, se, verbose=False):
     return out
 
 
-
 def dilated_pixel(img, se, x, y, verbose=False):
     """Returns the post-dilation value of the pixel.
 
@@ -126,7 +133,7 @@ def dilated_pixel(img, se, x, y, verbose=False):
     # for (x, y) in where_to_check:
 
     if verbose:
-        print("Determining whether {} is active...".format((x,y)))
+        print("Determining whether {} is active...".format((x, y)))
 
     for i in range(0, se.shape[0]):
         if return_bool:
@@ -135,14 +142,24 @@ def dilated_pixel(img, se, x, y, verbose=False):
             if return_bool:
                 break
             if check_if_se_coordinate_valid(img, se, x, y, i, j):
-                comp = (x + i - se.shape[0]//2,
-                        y + j - se.shape[1]//2)
+                comp = (x + i - se.shape[0] // 2, y + j - se.shape[1] // 2)
                 if verbose:
-                    print("  Cross-checking absolute image pixel ({}, {}) against SE pixel ({}, {}).".format(comp[0],comp[1],i,j), end="    ")
+                    print(
+                        "  Cross-checking absolute image pixel ({}, {}) against SE pixel ({}, {}).".format(
+                            comp[0], comp[1], i, j
+                        ),
+                        end="    ",
+                    )
 
                 if se[i, j]:
                     if verbose:
-                        print("Pixel active, assigning... {} && {} == {}.".format(img[comp[0], comp[1]], se[i, j], (img[comp[0], comp[1]] and se[i, j])))
+                        print(
+                            "Pixel active, assigning... {} && {} == {}.".format(
+                                img[comp[0], comp[1]],
+                                se[i, j],
+                                (img[comp[0], comp[1]] and se[i, j]),
+                            )
+                        )
                     return_bool = return_bool or (img[comp[0], comp[1]] and se[i, j])
                 else:
                     if verbose:
@@ -188,13 +205,10 @@ def boundary(img, se, verbose=False):
     return out
 
 
-
-
-
 if __name__ == "__main__":
     print("Andrew Quinn - EECS 332 - MP#2\n" + ("-" * 80))
-    results_dir = os.path.join(script_dir, 'results')
-    se_dir = os.path.join(script_dir, 'structure_elems')
+    results_dir = os.path.join(script_dir, "results")
+    se_dir = os.path.join(script_dir, "structure_elems")
 
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
@@ -204,7 +218,7 @@ if __name__ == "__main__":
     for se in structural_elements:
         se_name = namestr(se)[0]
         se_save_location = os.path.join(se_dir, se_name + ".bmp")
-        im = Image.fromarray(se.astype(np.uint8) * 255, 'L')
+        im = Image.fromarray(se.astype(np.uint8) * 255, "L")
         im.save(se_save_location)
 
     print("You can see the various SEs used by checking structure_elems/.")
@@ -214,7 +228,14 @@ if __name__ == "__main__":
         img_in = np.array(Image.open(image))
         for se in structural_elements:
             for op in [erode, dilate, opening, closing, boundary]:
-                rel_filename = Path(image).stem + "-" + namestr(se)[0] + "-" + namestr(op)[0] + ".bmp"
+                rel_filename = (
+                    Path(image).stem
+                    + "-"
+                    + namestr(se)[0]
+                    + "-"
+                    + namestr(op)[0]
+                    + ".bmp"
+                )
                 abs_filename = os.path.join(results_dir, rel_filename)
 
                 im = Image.fromarray(op(img_in, se))

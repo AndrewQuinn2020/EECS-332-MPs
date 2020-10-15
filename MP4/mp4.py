@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 from colorsys import hsv_to_rgb
+
 import mp2
 
 try:
@@ -11,9 +12,9 @@ try:
 except ImportError:  # Python 3.x
     import pickle
 
-from PIL import Image
-import numpy as np
 import colorlog
+import numpy as np
+from PIL import Image
 
 logger = logging.getLogger()
 logger.setLevel(colorlog.colorlog.logging.DEBUG)
@@ -26,10 +27,9 @@ np.set_printoptions(threshold=sys.maxsize)
 np.set_printoptions(linewidth=10000)
 
 script_dir = os.path.dirname(__file__)
-hist_output_dir = os.path.join(script_dir,
-                               "histogram_data")
+hist_output_dir = os.path.join(script_dir, "histogram_data")
 images_dir = os.path.join(script_dir, "images")
-results_dir = os.path.join(script_dir, 'results')
+results_dir = os.path.join(script_dir, "results")
 
 
 def array2tuples(img_array):
@@ -38,13 +38,16 @@ def array2tuples(img_array):
 
     I just prefer to work with tuples because they're hashable and play nice
     with dictionaries in Python. The up front cost isn't that great."""
-    return_array = np.zeros((img_array.shape[0], img_array.shape[1]), dtype=(type((1,2,3))))
+    return_array = np.zeros(
+        (img_array.shape[0], img_array.shape[1]), dtype=(type((1, 2, 3)))
+    )
     for i in range(0, img_array.shape[0]):
         for j in range(0, img_array.shape[1]):
             tuple_in = (img_array[i, j, 0], img_array[i, j, 1], img_array[i, j, 2])
             return_array[i, j] = tuple_in
 
     return return_array
+
 
 def array2tuples_2d(img_array, val1=0, val2=1):
     """Given a 2-dimensional array of vectors length 3, returns a 2d array
@@ -53,7 +56,9 @@ def array2tuples_2d(img_array, val1=0, val2=1):
 
     I just prefer to work with tuples because they're hashable and play nice
     with dictionaries in Python. The up front cost isn't that great."""
-    return_array = np.zeros((img_array.shape[0], img_array.shape[1]), dtype=(type((1,2))))
+    return_array = np.zeros(
+        (img_array.shape[0], img_array.shape[1]), dtype=(type((1, 2)))
+    )
     for i in range(0, img_array.shape[0]):
         for j in range(0, img_array.shape[1]):
             tuple_in = (img_array[i, j, val1], img_array[i, j, val2])
@@ -74,7 +79,7 @@ def create_hard_mask_3d(img, hist, threshold=0):
     for i in range(0, img.shape[0]):
         for j in range(0, img.shape[1]):
             if img[i, j] in hist:
-                if hist[img[i,j]] > threshold:
+                if hist[img[i, j]] > threshold:
                     mask[i, j] = 1
     return mask
 
@@ -91,7 +96,7 @@ def create_hard_mask_2d(img, hist, threshold=0):
     for i in range(0, img.shape[0]):
         for j in range(0, img.shape[1]):
             if img[i, j] in hist:
-                if hist[img[i,j]] > threshold:
+                if hist[img[i, j]] > threshold:
                     mask[i, j] = 1
     return mask
 
@@ -111,11 +116,16 @@ def array_hsv2rgb(img_array):
     place to be RGB values."""
     for i in range(0, img_array.shape[0]):
         for j in range(0, img_array.shape[1]):
-            rgb = hsv_to_rgb(img_array[i,j,0]/255, img_array[i,j,1]/255, img_array[i,j,2]/255)
-            img_array[i,j,0] = rgb[0] * 255
-            img_array[i,j,1] = rgb[1] * 255
-            img_array[i,j,2] = rgb[2] * 255
+            rgb = hsv_to_rgb(
+                img_array[i, j, 0] / 255,
+                img_array[i, j, 1] / 255,
+                img_array[i, j, 2] / 255,
+            )
+            img_array[i, j, 0] = rgb[0] * 255
+            img_array[i, j, 1] = rgb[1] * 255
+            img_array[i, j, 2] = rgb[2] * 255
     return img_array
+
 
 if __name__ == "__main__":
     logger.info("Andrew Quinn - EECS 334 - MP 4")
@@ -124,16 +134,16 @@ if __name__ == "__main__":
     logger.info("has generated histogram training data in `histogram_data/`.")
 
     # Load in the histogram files.
-    hist_rgb = pickle.load( open( os.path.join(hist_output_dir, "hist_rgb.pickle"), "rb"))
-    hist_hsv = pickle.load( open( os.path.join(hist_output_dir, "hist_hsv.pickle"), "rb"))
-    hist_rg = pickle.load( open( os.path.join(hist_output_dir, "hist_rg.pickle"), "rb"))
-    hist_rb = pickle.load( open( os.path.join(hist_output_dir, "hist_rb.pickle"), "rb"))
-    hist_gb = pickle.load( open( os.path.join(hist_output_dir, "hist_gb.pickle"), "rb"))
-    hist_hs = pickle.load( open( os.path.join(hist_output_dir, "hist_hs.pickle"), "rb"))
-    hist_hv = pickle.load( open( os.path.join(hist_output_dir, "hist_hv.pickle"), "rb"))
-    hist_sv = pickle.load( open( os.path.join(hist_output_dir, "hist_sv.pickle"), "rb"))
+    hist_rgb = pickle.load(open(os.path.join(hist_output_dir, "hist_rgb.pickle"), "rb"))
+    hist_hsv = pickle.load(open(os.path.join(hist_output_dir, "hist_hsv.pickle"), "rb"))
+    hist_rg = pickle.load(open(os.path.join(hist_output_dir, "hist_rg.pickle"), "rb"))
+    hist_rb = pickle.load(open(os.path.join(hist_output_dir, "hist_rb.pickle"), "rb"))
+    hist_gb = pickle.load(open(os.path.join(hist_output_dir, "hist_gb.pickle"), "rb"))
+    hist_hs = pickle.load(open(os.path.join(hist_output_dir, "hist_hs.pickle"), "rb"))
+    hist_hv = pickle.load(open(os.path.join(hist_output_dir, "hist_hv.pickle"), "rb"))
+    hist_sv = pickle.load(open(os.path.join(hist_output_dir, "hist_sv.pickle"), "rb"))
 
-    global_threshold = round(hist_rgb['size'] * 0.00005)
+    global_threshold = round(hist_rgb["size"] * 0.00005)
 
     for path, subdirs, files in os.walk(images_dir):
         for name in files:
@@ -146,7 +156,9 @@ if __name__ == "__main__":
             image_array_hsv_tupled = array2tuples(image_array_hsv)
             image_array_hs_tupled = array2tuples_2d(image_array_hsv)
 
-            mask_rgb = create_hard_mask_3d(image_array_rgb_tupled, hist_rgb, global_threshold)
+            mask_rgb = create_hard_mask_3d(
+                image_array_rgb_tupled, hist_rgb, global_threshold
+            )
             image_out_rgb = apply_hard_mask(image_array_rgb, mask_rgb)
 
             save_loc = os.path.join(results_dir, name[:-4] + "_rgb_mask.bmp")
@@ -154,8 +166,9 @@ if __name__ == "__main__":
             im = Image.fromarray(image_out_rgb)
             im.save(save_loc)
 
-
-            mask_hsv = create_hard_mask_3d(image_array_hsv_tupled, hist_hsv, global_threshold)
+            mask_hsv = create_hard_mask_3d(
+                image_array_hsv_tupled, hist_hsv, global_threshold
+            )
             image_out_hsv = apply_hard_mask(image_array_hsv, mask_hsv)
 
             save_loc = os.path.join(results_dir, name[:-4] + "_hsv_mask.bmp")
@@ -163,15 +176,15 @@ if __name__ == "__main__":
             im = Image.fromarray(array_hsv2rgb(image_out_hsv))
             im.save(save_loc)
 
-            mask_hs = create_hard_mask_2d(image_array_hs_tupled, hist_hs, global_threshold)
+            mask_hs = create_hard_mask_2d(
+                image_array_hs_tupled, hist_hs, global_threshold
+            )
             image_out_hs = apply_hard_mask(image_array_hsv, mask_hs)
-
 
             save_loc = os.path.join(results_dir, name[:-4] + "_hs_mask.bmp")
             logger.debug("Saving HS mask to {}".format(save_loc))
             im = Image.fromarray(array_hsv2rgb(image_out_hs))
             im.save(save_loc)
-
 
             mask_hs = mp2.erode(mask_hs, mp2.se_cross_3)
             # mask_hs = mp2.erode(mask_hs, mp2.se_shield_5)
@@ -179,7 +192,6 @@ if __name__ == "__main__":
             mask_hs = mp2.dilate(mask_hs, mp2.se_circle_5)
             mask_hs = mp2.dilate(mask_hs, mp2.se_circle_5)
             image_out_hs = apply_hard_mask(image_array_hsv, mask_hs)
-
 
             save_loc = os.path.join(results_dir, name[:-4] + "_hs_mask_morphed.bmp")
             logger.debug("Saving HS mask to {}".format(save_loc))

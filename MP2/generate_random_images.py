@@ -3,8 +3,8 @@
 import os
 import sys
 
-from PIL import Image
 import numpy as np
+from PIL import Image
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -16,10 +16,10 @@ image_dimensions = (7, 7)
 if __name__ == "__main__":
     print("EECS 332 - MP#1 - Andrew Quinn random bmp file generator")
 
-    if not os.path.exists(os.path.join(script_dir, 'test_images')):
-        os.makedirs(os.path.join(script_dir, 'test_images'))
-    if not os.path.exists(os.path.join(script_dir, 'test_results')):
-        os.makedirs(os.path.join(script_dir, 'test_results'))
+    if not os.path.exists(os.path.join(script_dir, "test_images")):
+        os.makedirs(os.path.join(script_dir, "test_images"))
+    if not os.path.exists(os.path.join(script_dir, "test_results")):
+        os.makedirs(os.path.join(script_dir, "test_results"))
 
     print(os.path.join(script_dir, "test_images"))
 
@@ -29,4 +29,8 @@ if __name__ == "__main__":
         im = Image.fromarray(new_bmp)
 
         file_index = str(i).zfill(3)
-        im.save(os.path.join(script_dir, "test_images", "test_image_{}.bmp".format(file_index)))
+        im.save(
+            os.path.join(
+                script_dir, "test_images", "test_image_{}.bmp".format(file_index)
+            )
+        )

@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
 
+import itertools
 import os
 import sys
-import itertools
-from PIL import Image
+
 import numpy as np
-
 from mp2 import *
-
+from PIL import Image
 
 np.set_printoptions(threshold=sys.maxsize)
 np.set_printoptions(linewidth=1000)
@@ -19,20 +18,22 @@ images = sorted([os.path.join(images_dir, f) for f in os.listdir(images_dir)])
 
 
 se_identity_1 = np.array([[True]])
-se_identity_3 = np.array([[False, False, False],
-                          [False, True,  False],
-                          [False, False, False]])
-se_identity_5 = np.array([[False, False, False, False, False],
-                          [False, False, False, False, False],
-                          [False, False,  True, False, False],
-                          [False, False, False, False, False],
-                          [False, False, False, False, False]])
-se_cross_3    = np.array([[False, True,  False],
-                          [True,  True,   True],
-                          [False, True,  False]])
-se_north_3    = np.array([[False, True,  False],
-                          [False, True,  False],
-                          [False, False, False]])
+se_identity_3 = np.array(
+    [[False, False, False], [False, True, False], [False, False, False]]
+)
+se_identity_5 = np.array(
+    [
+        [False, False, False, False, False],
+        [False, False, False, False, False],
+        [False, False, True, False, False],
+        [False, False, False, False, False],
+        [False, False, False, False, False],
+    ]
+)
+se_cross_3 = np.array([[False, True, False], [True, True, True], [False, True, False]])
+se_north_3 = np.array(
+    [[False, True, False], [False, True, False], [False, False, False]]
+)
 
 if __name__ == "__main__":
     print("Andrew Quinn - EECS 332 - MP#2, Testing Framework")
@@ -44,10 +45,9 @@ if __name__ == "__main__":
         print(".-*-" * 20)
         print("\n\n")
         print(image)
-        img_in = np.array(Image.open(image).convert('1'))
+        img_in = np.array(Image.open(image).convert("1"))
         print(img_in)
         print("")
-
 
         print("\n\n\n============ EROSION TEST ==============\n\n\n")
         print("SE 1x1 identity (should all be True):")
@@ -69,7 +69,6 @@ if __name__ == "__main__":
         print("\n   north erode ... ")
         print(erode(img_in, se_north_3))
 
-
         print("\n\n\n============ DILATION TEST ==============\n\n\n")
         print("SE 1x1 identity (should all be True):")
         print(img_in == dilate(img_in, se_identity_1))
@@ -89,7 +88,6 @@ if __name__ == "__main__":
         print(img_in)
         print("\n   north dilate ... ")
         print(dilate(img_in, se_north_3))
-
 
         print("\n\n\n============ OPENING TEST ==============\n\n\n")
         print("SE 1x1 identity (should all be True):")
@@ -130,7 +128,6 @@ if __name__ == "__main__":
         print(img_in)
         print("\n   north closing ... ")
         print(closing(img_in, se_north_3))
-
 
     print("\n\n\n============ BOUNDARY TEST ==============\n\n\n")
     print("SE 1x1 identity (should all be True):")

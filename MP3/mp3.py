@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
- # Anything not directly related to processing here
-from mp3_helper import *
-
-from PIL import Image
-import numpy as np
-import matplotlib.pyplot as plt
+# Anything not directly related to processing here
 import sys
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+import numpy as np
+from mp3_helper import *
+from PIL import Image
 
 np.set_printoptions(threshold=sys.maxsize)
 np.set_printoptions(linewidth=1000)
@@ -44,8 +43,6 @@ def hist2matrix(hist):
     return m
 
 
-
-
 def matrix2cmd(matrix_in):
     """Given an n*2 matrix of keys in column 0 and integer values in column
     1, returns a new n*2 matrix of the same keys, but the values have been
@@ -53,7 +50,7 @@ def matrix2cmd(matrix_in):
 
     matrix_out = np.zeros_like(matrix_in)
     c = 0
-    for i in range(0,matrix_in.shape[0]):
+    for i in range(0, matrix_in.shape[0]):
         c += matrix_in[i, 1]
         # print(c)
         matrix_out[i, 0] = matrix_in[i, 0]
@@ -79,16 +76,17 @@ def cmd2plottable(cmd_in):
 
     return matrix_out
 
+
 def cmd2dict(cmd):
     """Returns a dictionary of what to replace each value by."""
-    pixel_count = cmd[cmd.shape[0]-1, cmd.shape[1]-1]
+    pixel_count = cmd[cmd.shape[0] - 1, cmd.shape[1] - 1]
     scaling_dict = dict()
 
     for i in range(0, cmd.shape[0]):
-        scaling_dict[cmd[i, 0]] = round(((cmd[i, 1] - cmd[0,1])/(pixel_count - cmd[0,1])) * 255)
+        scaling_dict[cmd[i, 0]] = round(
+            ((cmd[i, 1] - cmd[0, 1]) / (pixel_count - cmd[0, 1])) * 255
+        )
     return scaling_dict
-
-
 
 
 if __name__ == "__main__":
@@ -107,16 +105,16 @@ if __name__ == "__main__":
 
         for i in range(0, results_data.shape[0]):
             for j in range(0, results_data.shape[1]):
-                results_data[i,j] = hist_eq_dict[img_data[i,j]]
+                results_data[i, j] = hist_eq_dict[img_data[i, j]]
 
         results_hist = img2dict(results_data)
         results_hist_matrix = hist2matrix(results_hist)
         results_hist_cmd = matrix2cmd(results_hist_matrix)
         plottable_results_cmd = cmd2plottable(results_hist_cmd)
 
-
-        test_results_path = save_gs(results_data, Path(image).stem,
-                                    dir=test_results_dir)
+        test_results_path = save_gs(
+            results_data, Path(image).stem, dir=test_results_dir
+        )
 
         print("Processed image saved to: {}".format(test_results_path))
 
@@ -126,16 +124,37 @@ if __name__ == "__main__":
         ax1.set_title("Pixels per color value: `{}`".format(Path(image).stem + ".bmp"))
         ax1.set_xlabel("Pixel color value ($v \in \{0, 1, \dots, 255\}$)")
         ax1.set_ylabel("# / pixels per grayscale value")
-        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.6, color='r', label="Original")
-        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.6, color='b', label="EQ'd")
+        ln1 = ax1.bar(
+            hist_data.keys(), hist_data.values(), alpha=0.6, color="r", label="Original"
+        )
+        ln2 = ax1.bar(
+            results_hist.keys(),
+            results_hist.values(),
+            alpha=0.6,
+            color="b",
+            label="EQ'd",
+        )
 
         ax2 = ax1.twinx()
-        ln3 = ax2.bar(plottable_cmd[:,0], plottable_cmd[:,1], alpha=0.1,
-                          color='g', label="cdf (Original)")
-        ln4 = ax2.bar(plottable_results_cmd[:,0], plottable_results_cmd[:,1],
-                          alpha=0.1, color='purple', label="cdf (EQ'd)")
+        ln3 = ax2.bar(
+            plottable_cmd[:, 0],
+            plottable_cmd[:, 1],
+            alpha=0.1,
+            color="g",
+            label="cdf (Original)",
+        )
+        ln4 = ax2.bar(
+            plottable_results_cmd[:, 0],
+            plottable_results_cmd[:, 1],
+            alpha=0.1,
+            color="purple",
+            label="cdf (EQ'd)",
+        )
 
-        plt.legend([ln1, ln2, ln3, ln4], [ln1.get_label(), ln2.get_label(), ln3.get_label(), ln4.get_label()])
+        plt.legend(
+            [ln1, ln2, ln3, ln4],
+            [ln1.get_label(), ln2.get_label(), ln3.get_label(), ln4.get_label()],
+        )
         plt.tight_layout()
 
         plt.savefig(os.path.join(test_results_dir, Path(image).stem + "_hist.svg"))
@@ -156,7 +175,7 @@ if __name__ == "__main__":
 
         for i in range(0, results_data.shape[0]):
             for j in range(0, results_data.shape[1]):
-                results_data[i,j] = hist_eq_dict[img_data[i,j]]
+                results_data[i, j] = hist_eq_dict[img_data[i, j]]
 
         results_hist = img2dict(results_data)
         results_hist_matrix = hist2matrix(results_hist)
@@ -172,16 +191,37 @@ if __name__ == "__main__":
         ax1.set_title("Pixels per color value: `{}`".format(Path(image).stem + ".bmp"))
         ax1.set_xlabel("Pixel color value ($v \in \{0, 1, \dots, 255\}$)")
         ax1.set_ylabel("Number of pixels")
-        ln1 = ax1.bar(hist_data.keys(), hist_data.values(), alpha=0.6, color='r', label="Original")
-        ln2 = ax1.bar(results_hist.keys(), results_hist.values(), alpha=0.6, color='b', label="EQ'd")
+        ln1 = ax1.bar(
+            hist_data.keys(), hist_data.values(), alpha=0.6, color="r", label="Original"
+        )
+        ln2 = ax1.bar(
+            results_hist.keys(),
+            results_hist.values(),
+            alpha=0.6,
+            color="b",
+            label="EQ'd",
+        )
 
         ax2 = ax1.twinx()
-        ln3 = ax2.bar(plottable_cmd[:,0], plottable_cmd[:,1], alpha=0.1,
-                          color='g', label="cdf (Original)")
-        ln4 = ax2.bar(plottable_results_cmd[:,0], plottable_results_cmd[:,1],
-                          alpha=0.1, color='purple', label="cdf (EQ'd)")
+        ln3 = ax2.bar(
+            plottable_cmd[:, 0],
+            plottable_cmd[:, 1],
+            alpha=0.1,
+            color="g",
+            label="cdf (Original)",
+        )
+        ln4 = ax2.bar(
+            plottable_results_cmd[:, 0],
+            plottable_results_cmd[:, 1],
+            alpha=0.1,
+            color="purple",
+            label="cdf (EQ'd)",
+        )
 
-        plt.legend([ln1, ln2, ln3, ln4], [ln1.get_label(), ln2.get_label(), ln3.get_label(), ln4.get_label()])
+        plt.legend(
+            [ln1, ln2, ln3, ln4],
+            [ln1.get_label(), ln2.get_label(), ln3.get_label(), ln4.get_label()],
+        )
         plt.tight_layout()
 
         plt.savefig(os.path.join(results_dir, Path(image).stem + "_hist.svg"))
