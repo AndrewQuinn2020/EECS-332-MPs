@@ -165,3 +165,8 @@ if __name__ == "__main__":
             sobel_mag_name = "{}_sobel_mag.bmp".format(name[:-4])
             logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
             save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
+
+            sobel_theta = np.floor((sobel(blurred)[1] + 180) / (360 / 255))
+            sobel_theta_name = "{}_sobel_theta.bmp".format(name[:-4])
+            logger.debug("  Saving {} in {}".format(sobel_theta_name, sobel_dir))
+            save_image(sobel_theta, os.path.join(sobel_dir, sobel_theta_name))
