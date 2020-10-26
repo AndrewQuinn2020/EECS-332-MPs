@@ -35,8 +35,9 @@ script_dir = os.path.dirname(__file__)
 images_dir = os.path.join(script_dir, "images")
 results_dir = os.path.join(script_dir, "results")
 blur_dir = os.path.join(results_dir, "blur_tests")
+sobel_dir = os.path.join(results_dir, "sobel_tests")
 
-dirs = [script_dir, images_dir, results_dir, blur_dir]
+dirs = [script_dir, images_dir, results_dir, blur_dir, sobel_dir]
 
 
 def generate_gaussian_kernel(size=3, sigma=0.5, verbose=False):
@@ -97,6 +98,32 @@ def save_image(image_array, path):
     return Image.fromarray(image_array.astype("uint8"), "L").save(path)
 
 
+def sobel(image_array):
+    """Performs the Sobel operator on image_array.
+
+    Two arrays of equal shape to image_array are reutrned, mag_img and theta_img
+    respectively. mag_img is the magnitude of the intensity change; theta_img is
+    the orientation of the change.
+    """
+    # The Sobel kernel operators are hardcoded.
+    g_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+    g_y = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
+
+    # Convolve the Sobel kernels with the image array.
+    g_x_image = signal.convolve2d(image_array, g_x, boundary="symm", mode="same")
+    g_y_image = signal.convolve2d(image_array, g_y, boundary="symm", mode="same")
+
+    # The easiest way to combine the Sobel kernels is to just turn them into an array of
+    # complex numbers.
+    g_comp = g_x_image + g_y_image * 1j
+
+    # Return the
+    g_mag = np.absolute(g_comp) / np.max(np.absolute(g_comp))
+    g_angle = np.angle(g_comp, True)
+
+    return (g_mag, g_angle)
+
+
 if __name__ == "__main__":
     logger.info("Andrew Quinn - EECS 332 - Machine Problem #5")
     logger.info("-" * (88 - 11))
@@ -110,16 +137,24 @@ if __name__ == "__main__":
     for path, subdirs, files in os.walk(images_dir):
         for name in files:
             logger.info("Now operating on:      {}".format(os.path.join(path, name)))
-            image = load_image(os.path.join(path, name))
+
+            # Generate blurred images.
             blur_count = 1
             for (size, sigma) in [(3, 0.5), (5, 0.7), (7, 0.9)]:
+                image = load_image(os.path.join(path, name))
                 blur_name = "{}_blur_{}.bmp".format(name[:-4], blur_count)
                 logger.debug(
-                    "Blurring {} with Gaussian kernel ({}, {}) to form {}".format(
+                    "  Blurring {} with Gaussian kernel ({}, {}) to form {}".format(
                         name, size, sigma, blur_name
                     )
                 )
                 kernel = generate_gaussian_kernel(size, sigma)
-                blurred_image = gaussian_blur(image, kernel)
+                blurred_image = np.floor(gaussian_blur(image, kernel))
+                logger.debug("  Saving {} in {}.".format(blur_name, blur_dir))
                 save_image(blurred_image, os.path.join(blur_dir, blur_name))
                 blur_count += 1
+
+            # Generate Sobel-operated images.
+            image = load_image(os.path.join(path, name))
+            kernel = generate_gaussian_kernel()
+            blurred_image = np.floor(gaussian_blur(image, kernel))
