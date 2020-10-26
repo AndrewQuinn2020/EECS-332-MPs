@@ -155,6 +155,13 @@ if __name__ == "__main__":
                 blur_count += 1
 
             # Generate Sobel-operated images.
+            logger.debug(
+                "  Generating Sobel-operated images (after blurring with Gaussian kernel (3, 0.5)."
+            )
             image = load_image(os.path.join(path, name))
             kernel = generate_gaussian_kernel()
-            blurred_image = np.floor(gaussian_blur(image, kernel))
+            blurred = np.floor(gaussian_blur(image, kernel))
+            sobel_mag = np.floor(255 * sobel(blurred)[0])
+            sobel_mag_name = "{}_sobel_mag.bmp".format(name[:-4])
+            logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
+            save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
