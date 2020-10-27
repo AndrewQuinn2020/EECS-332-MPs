@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 from itertools import product
+from functools import reduce
 
 import colorlog
 from PIL import Image
@@ -36,8 +37,9 @@ images_dir = os.path.join(script_dir, "images")
 results_dir = os.path.join(script_dir, "results")
 blur_dir = os.path.join(results_dir, "blur_tests")
 sobel_dir = os.path.join(results_dir, "sobel_tests")
+canny_dir = os.path.join(results_dir, "canny_tests")
 
-dirs = [script_dir, images_dir, results_dir, blur_dir, sobel_dir]
+dirs = [script_dir, images_dir, results_dir, blur_dir, sobel_dir, canny_dir]
 
 
 def generate_gaussian_kernel(size=3, sigma=0.5, verbose=False):
@@ -131,7 +133,7 @@ def find_hysteresis_thresholds(magnitude_data, edge_percentile):
     hist, bins = np.histogram((magnitude_data * 255).ravel(), 256, [0, 256])
     T_high = np.percentile(magnitude_data, edge_percentile)
     T_low = T_high / 2
-    return T_high, T_low
+    return T_low, T_high
 
 
 def sobel_suppress_nonmaxima(sobel_mag_array, sobel_theta_array):
@@ -140,6 +142,8 @@ def sobel_suppress_nonmaxima(sobel_mag_array, sobel_theta_array):
     nonmaxima suppression on the input magnitude edge map.
     """
     sobel_mag_nonmaxes_suppressed = np.zeros(sobel_mag_array.shape)
+
+    # All this lookup table tells us is which two values to check.
     LUT = {
         1: (1, 0),
         2: (1, -1),
@@ -170,6 +174,138 @@ def sobel_suppress_nonmaxima(sobel_mag_array, sobel_theta_array):
         except IndexError as e:
             pass
     return sobel_mag_nonmaxes_suppressed
+
+
+def run_hysteresis_filter(sobel_array, t_low, t_high):
+    """Given a 2D array of floating points, runs a hysteresis filter on the image.
+
+    A hysteresis filter is a recursive filter which works in three parts. For every
+    value in the array,
+
+    1. If the value is less than t_low, automatically zero it out. It won't be
+       considered.
+    2. If the value is greater than t_high, set it to 1. It is automatically considered
+       and endpoint in the final matrix. This is what we call a "strong edge".
+    3. If the value is between t_low and t_high, it is called a weak edge. We consider
+       it strong if one of its 8 neighbors is strong. (This is the part that gets
+       applied recursively.)
+
+    Weak edges that don't eventually come into contact with a strong edge eventually
+    get cancelled out and become low edges. We put this data into a new matrix, to
+    ensure we don't accidentally mess up with the recursion, although you could probably
+    be clever enough to do this in place.
+    """
+    # 0.5 is used to denote a weak edge. All pixels in the array start out as
+    # weak edges.
+    canny_array = np.zeros(sobel_array.shape).astype("uint8")
+
+    def canny_check_pixel(data, i, j, t_low, t_high, recurse=0, maxdepth=6):
+        """Check to see whether a single pixel should be considered a strong edge,
+        or a non edge, with recursion if it's a weak edge.
+
+        By default this cuts off if we go beyond maxdepth."""
+        if recurse > maxdepth:
+            return False
+
+        try:
+            if data[i, j] >= t_high:
+                return True
+            elif data[i, j] <= t_low:
+                return False
+            else:
+                # This looks weird, but reduce is just casting "or" over the whole
+                # list.
+                return reduce(
+                    lambda x, y: x or y,
+                    [
+                        canny_check_pixel(
+                            data,
+                            i - 1,
+                            j + 1,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        canny_check_pixel(
+                            data,
+                            i,
+                            j + 1,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        canny_check_pixel(
+                            data,
+                            i + 1,
+                            j + 1,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        canny_check_pixel(
+                            data,
+                            i - 1,
+                            j,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        # canny_check_pixel(data, i, j, t_low, t_high, recurse=recurse+1, maxdepth=maxdepth), SKIP - it's us!
+                        canny_check_pixel(
+                            data,
+                            i + 1,
+                            j,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        canny_check_pixel(
+                            data,
+                            i - 1,
+                            j - 1,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        canny_check_pixel(
+                            data,
+                            i,
+                            j - 1,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                        canny_check_pixel(
+                            data,
+                            i + 1,
+                            j - 1,
+                            t_low,
+                            t_high,
+                            recurse=recurse + 1,
+                            maxdepth=maxdepth,
+                        ),
+                    ],
+                )
+        except IndexError:
+            # This happens naturally with recursion when we get an i, j out of bounds.
+            # We just return 0 in this case. OOB pixels are considered non-edges.
+            return False
+
+    for i in range(0, sobel_array.shape[0]):
+        for j in range(0, sobel_array.shape[1]):
+            if canny_check_pixel(sobel_array, i, j, t_low, t_high):
+                canny_array[i, j] = 255
+            else:
+                canny_array[i, j] = 0
+
+    return canny_array
 
 
 if __name__ == "__main__":
@@ -221,14 +357,22 @@ if __name__ == "__main__":
             save_image(sobel_theta, os.path.join(sobel_dir, sobel_theta_name))
 
             # Finding hysteresis thresholds.
-            (h_high, h_low) = find_hysteresis_thresholds(sobel(blurred)[0], 95)
-            logger.debug("Hysteresis thresholds: High {}, low {}".format(h_high, h_low))
+            (t_low, t_high) = find_hysteresis_thresholds(sobel(blurred)[0], 80)
+            logger.debug(
+                "Hysteresis thresholds: Low {:4f}, high {:4f}".format(t_low, t_high)
+            )
 
+            # Suppressing nonmaxima.
             sobel_suppressed = sobel_suppress_nonmaxima(
                 sobel(blurred)[0], sobel(blurred)[1]
             )
-            logger.debug("Sobel_suppressed looks like:\n{}".format(sobel_suppressed))
             sobel_mag = np.floor(255 * sobel_suppressed)
             sobel_mag_name = "{}_sobel_mag_suppressed.bmp".format(name[:-4])
             logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
             save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
+
+            # Performing canny edge detect.
+            canny = run_hysteresis_filter(sobel_suppressed, t_low, t_high)
+            canny_name = "{}_canny.bmp".format(name[:-4])
+            logger.debug("  Saving {} in {}".format(canny_name, canny_dir))
+            save_image(canny, os.path.join(canny_dir, canny_name))
