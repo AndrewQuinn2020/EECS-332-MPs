@@ -199,7 +199,7 @@ def run_hysteresis_filter(sobel_array, t_low, t_high):
     # weak edges.
     canny_array = np.zeros(sobel_array.shape).astype("uint8")
 
-    def canny_check_pixel(data, i, j, t_low, t_high, recurse=0, maxdepth=6):
+    def canny_check_pixel(data, i, j, t_low, t_high, recurse=0, maxdepth=4):
         """Check to see whether a single pixel should be considered a strong edge,
         or a non edge, with recursion if it's a weak edge.
 
@@ -319,60 +319,54 @@ if __name__ == "__main__":
             os.makedirs(dir)
 
     for path, subdirs, files in os.walk(images_dir):
-        for name in files:
-            logger.info("Now operating on:      {}".format(os.path.join(path, name)))
+        for og_name in files:
+            logger.info("Now working on:      {}".format(os.path.join(path, og_name)))
 
             # Generate blurred images.
             blur_count = 1
             for (size, sigma) in [(3, 0.5), (5, 0.7), (7, 0.9)]:
-                image = load_image(os.path.join(path, name))
-                blur_name = "{}_blur_{}.bmp".format(name[:-4], blur_count)
+                image = load_image(os.path.join(path, og_name))
+                name = "{}_blur_{}.bmp".format(og_name[:-4], blur_count)
                 logger.debug(
                     "  Blurring {} with Gaussian kernel ({}, {}) to form {}".format(
-                        name, size, sigma, blur_name
+                        name, size, sigma, name
                     )
                 )
                 kernel = generate_gaussian_kernel(size, sigma)
-                blurred_image = np.floor(gaussian_blur(image, kernel))
-                logger.debug("  Saving {} in {}.".format(blur_name, blur_dir))
-                save_image(blurred_image, os.path.join(blur_dir, blur_name))
+                image = np.floor(gaussian_blur(image, kernel))
+                logger.debug("  Saving {} in {}.".format(name, blur_dir))
+                save_image(image, os.path.join(blur_dir, name))
                 blur_count += 1
 
-            # Generate Sobel-operated images.
-            logger.debug(
-                "  Generating Sobel-operated images (after blurring with "
-                "Gaussian kernel 3, 0.5"
-            )
-            image = load_image(os.path.join(path, name))
-            kernel = generate_gaussian_kernel()
-            blurred = np.floor(gaussian_blur(image, kernel))
-            sobel_mag = np.floor(255 * sobel(blurred)[0])
-            sobel_mag_name = "{}_sobel_mag.bmp".format(name[:-4])
-            logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
-            save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
+                # Generate Sobel-operated images.
+                logger.debug("  Sobel operating.")
+                sobel_mag = np.floor(255 * sobel(image)[0])
+                sobel_mag_name = "{}_sobel_mag.bmp".format(name[:-4])
+                logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
+                save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
 
-            sobel_theta = np.floor((sobel(blurred)[1] + 180) / (360 / 255))
-            sobel_theta_name = "{}_sobel_theta.bmp".format(name[:-4])
-            logger.debug("  Saving {} in {}".format(sobel_theta_name, sobel_dir))
-            save_image(sobel_theta, os.path.join(sobel_dir, sobel_theta_name))
+                sobel_theta = np.floor((sobel(image)[1] + 180) / (360 / 255))
+                sobel_theta_name = "{}_sobel_theta.bmp".format(name[:-4])
+                logger.debug("  Saving {} in {}".format(sobel_theta_name, sobel_dir))
+                save_image(sobel_theta, os.path.join(sobel_dir, sobel_theta_name))
 
-            # Finding hysteresis thresholds.
-            (t_low, t_high) = find_hysteresis_thresholds(sobel(blurred)[0], 80)
-            logger.debug(
-                "Hysteresis thresholds: Low {:4f}, high {:4f}".format(t_low, t_high)
-            )
+                # Finding hysteresis thresholds.
+                (t_low, t_high) = find_hysteresis_thresholds(sobel(image)[0], 80)
+                logger.debug(
+                    "Hysteresis thresholds: Low {:4f}, high {:4f}".format(t_low, t_high)
+                )
 
-            # Suppressing nonmaxima.
-            sobel_suppressed = sobel_suppress_nonmaxima(
-                sobel(blurred)[0], sobel(blurred)[1]
-            )
-            sobel_mag = np.floor(255 * sobel_suppressed)
-            sobel_mag_name = "{}_sobel_mag_suppressed.bmp".format(name[:-4])
-            logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
-            save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
+                # Suppressing nonmaxima.
+                sobel_suppressed = sobel_suppress_nonmaxima(
+                    sobel(image)[0], sobel(image)[1]
+                )
+                sobel_mag = np.floor(255 * sobel_suppressed)
+                sobel_mag_name = "{}_sobel_mag_suppressed.bmp".format(name[:-4])
+                logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
+                save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
 
-            # Performing canny edge detect.
-            canny = run_hysteresis_filter(sobel_suppressed, t_low, t_high)
-            canny_name = "{}_canny.bmp".format(name[:-4])
-            logger.debug("  Saving {} in {}".format(canny_name, canny_dir))
-            save_image(canny, os.path.join(canny_dir, canny_name))
+                # Performing canny edge detect.
+                canny = run_hysteresis_filter(sobel_suppressed, t_low, t_high)
+                canny_name = "{}_canny.bmp".format(name[:-4])
+                logger.debug("  Saving {} in {}".format(canny_name, canny_dir))
+                save_image(canny, os.path.join(canny_dir, canny_name))
