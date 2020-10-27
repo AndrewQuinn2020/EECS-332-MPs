@@ -5,7 +5,7 @@
 import logging
 import os
 import sys
-import itertools
+from itertools import product
 
 import colorlog
 from PIL import Image
@@ -124,6 +124,54 @@ def sobel(image_array):
     return (g_mag, g_angle)
 
 
+def find_hysteresis_thresholds(magnitude_data, edge_percentile):
+    """Given the Sobel magnitude array and a percent to cut off with, finds a
+    high and low threshold for use with the Canny edge hysteresis thresholding."""
+
+    hist, bins = np.histogram((magnitude_data * 255).ravel(), 256, [0, 256])
+    T_high = np.percentile(magnitude_data, edge_percentile)
+    T_low = T_high / 2
+    return T_high, T_low
+
+
+def sobel_suppress_nonmaxima(sobel_mag_array, sobel_theta_array):
+    """
+    Uses the theta edge map  and a look-up table method to perform
+    nonmaxima suppression on the input magnitude edge map.
+    """
+    sobel_mag_nonmaxes_suppressed = np.zeros(sobel_mag_array.shape)
+    LUT = {
+        1: (1, 0),
+        2: (1, -1),
+        3: (0, -1),
+        4: (-1, -1),
+        5: (-1, 0),
+        6: (-1, 1),
+        7: (0, 1),
+        0: (1, 1),
+    }
+    sobel_theta_array = np.copy(sobel_theta_array)
+    sobel_theta_array[sobel_theta_array < 0] += 180
+    sobel_theta_array += 45 / 2
+    dirs = sobel_theta_array // 45 + 1
+    dirs[dirs == 9] = 1
+    height, width = sobel_mag_nonmaxes_suppressed.shape
+    for (y, x) in product(range(height), range(width)):
+        try:
+            left = dirs[y, x] % 8
+            right = (dirs[y, x] + 4) % 8
+            ldx, ldy = LUT[left]
+            rdx, rdy = LUT[right]
+            if (
+                sobel_mag_array[y, x] >= sobel_mag_array[y + ldy, x + ldx]
+                and sobel_mag_array[y, x] >= sobel_mag_array[y + rdy, x + rdx]
+            ):
+                sobel_mag_nonmaxes_suppressed[y, x] = sobel_mag_array[y, x]
+        except IndexError as e:
+            pass
+    return sobel_mag_nonmaxes_suppressed
+
+
 if __name__ == "__main__":
     logger.info("Andrew Quinn - EECS 332 - Machine Problem #5")
     logger.info("-" * (88 - 11))
@@ -156,7 +204,8 @@ if __name__ == "__main__":
 
             # Generate Sobel-operated images.
             logger.debug(
-                "  Generating Sobel-operated images (after blurring with Gaussian kernel (3, 0.5)."
+                "  Generating Sobel-operated images (after blurring with "
+                "Gaussian kernel 3, 0.5"
             )
             image = load_image(os.path.join(path, name))
             kernel = generate_gaussian_kernel()
@@ -170,3 +219,16 @@ if __name__ == "__main__":
             sobel_theta_name = "{}_sobel_theta.bmp".format(name[:-4])
             logger.debug("  Saving {} in {}".format(sobel_theta_name, sobel_dir))
             save_image(sobel_theta, os.path.join(sobel_dir, sobel_theta_name))
+
+            # Finding hysteresis thresholds.
+            (h_high, h_low) = find_hysteresis_thresholds(sobel(blurred)[0], 95)
+            logger.debug("Hysteresis thresholds: High {}, low {}".format(h_high, h_low))
+
+            sobel_suppressed = sobel_suppress_nonmaxima(
+                sobel(blurred)[0], sobel(blurred)[1]
+            )
+            logger.debug("Sobel_suppressed looks like:\n{}".format(sobel_suppressed))
+            sobel_mag = np.floor(255 * sobel_suppressed)
+            sobel_mag_name = "{}_sobel_mag_suppressed.bmp".format(name[:-4])
+            logger.debug("  Saving {} in {}".format(sobel_mag_name, sobel_dir))
+            save_image(sobel_mag, os.path.join(sobel_dir, sobel_mag_name))
