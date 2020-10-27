@@ -10,7 +10,6 @@ from functools import reduce
 
 import colorlog
 from PIL import Image
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 
@@ -38,6 +37,7 @@ results_dir = os.path.join(script_dir, "results")
 blur_dir = os.path.join(results_dir, "blur_tests")
 sobel_dir = os.path.join(results_dir, "sobel_tests")
 canny_dir = os.path.join(results_dir, "canny_tests")
+other_edge_dir = os.path.join(results_dir, "other_edge_tests")
 
 dirs = [script_dir, images_dir, results_dir, blur_dir, sobel_dir, canny_dir]
 
@@ -144,7 +144,7 @@ def sobel_suppress_nonmaxima(sobel_mag_array, sobel_theta_array):
     sobel_mag_nonmaxes_suppressed = np.zeros(sobel_mag_array.shape)
 
     # All this lookup table tells us is which two values to check.
-    LUT = {
+    lookup = {
         1: (1, 0),
         2: (1, -1),
         3: (0, -1),
@@ -164,8 +164,8 @@ def sobel_suppress_nonmaxima(sobel_mag_array, sobel_theta_array):
         try:
             left = dirs[y, x] % 8
             right = (dirs[y, x] + 4) % 8
-            ldx, ldy = LUT[left]
-            rdx, rdy = LUT[right]
+            ldx, ldy = lookup[left]
+            rdx, rdy = lookup[right]
             if (
                 sobel_mag_array[y, x] >= sobel_mag_array[y + ldy, x + ldx]
                 and sobel_mag_array[y, x] >= sobel_mag_array[y + rdy, x + rdx]
@@ -370,3 +370,6 @@ if __name__ == "__main__":
                 canny_name = "{}_canny.bmp".format(name[:-4])
                 logger.debug("  Saving {} in {}".format(canny_name, canny_dir))
                 save_image(canny, os.path.join(canny_dir, canny_name))
+
+                # We didn't hardcode any other edge detectors here, but some examples
+                # of other edge detectors will be in the report.
