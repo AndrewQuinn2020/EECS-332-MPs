@@ -132,3 +132,5 @@ dmypy.json
 *gs*
 *output.txt
 *histogram_training_images*
+MP7/images/*
+MP7/results/*
