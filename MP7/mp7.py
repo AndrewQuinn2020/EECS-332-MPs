@@ -104,45 +104,16 @@ if __name__ == "__main__":
             logger.warning("\t\t{}\t\t doesn't exist... Creating.".format(dir))
             os.makedirs(dir)
 
-    count = 3
+    count = 10
     for path, subdirs, files in os.walk(images_dir):
         first_image = True
         for og_name in sorted(files):
-            logger.info("Now working on:      {}".format(os.path.join(path, og_name)))
-            img = cv.imread(os.path.join(path, og_name), cv.IMREAD_GRAYSCALE)
             location_out = os.path.join(results_dir, og_name)
             template_out = os.path.join(results_dir, og_name[:-4] + "_template.jpg")
 
-            if first_image:
-                template = subimage(img, STARTING_X, STARTING_Y)
-                draw_bounding_box(img, STARTING_X, STARTING_Y)
-                first_image = False
+            logger.info("Now working on:      {}".format(os.path.join(path, og_name)))
+            img = cv.imread(os.path.join(path, og_name), cv.IMREAD_GRAYSCALE)
 
-            else:
-                f, next_x, next_y, count = exhaustive_search(zero_diff, template, img)
-                assert count == (img.shape[0] - template.shape[0] + 1) * (
-                    img.shape[1] - template.shape[1] + 1
-                )
-                logger.info("  Exhaustive search complete!")
-                logger.info(
-                    "  Next boundary box will start at ({}, {}).".format(next_x, next_y)
-                )
-                template = subimage(img, next_x, next_y)
-                draw_bounding_box(img, next_x, next_y)
-
-            # if type(prev_img) is not type(img):
-            #     prev_img = img
-            #     draw_bounding_box(img, 55, 25)
-            #     comparison_img = subimage(img, 55, 25)
-            # else:
-            #     prev_img = img
-            #
-            # print(exhaustive_search(zero_diff, comparison_img, prev_img))
-            # print(exhaustive_search(ssd, comparison_img, prev_img))
-            # print(prev_img.shape)
-            #
-            logger.warning("Writing template to:   {}".format(template_out))
-            cv.imwrite(template_out, template)
             logger.warning("Writing results to:    {}".format(location_out))
             cv.imwrite(location_out, img)
 
