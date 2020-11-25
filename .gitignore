@@ -134,4 +134,4 @@ dmypy.json
 *histogram_training_images*
 MP7/images/*
 MP7/results/*
-Final*png*
+*.png
