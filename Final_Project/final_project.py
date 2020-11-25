@@ -49,6 +49,8 @@ stitches_dir = os.path.join(images_dir, "stitches")
 stitches_test_dir = os.path.join(stitches_dir, "identity_stitch")
 stitches_noisemap_test_dir = os.path.join(stitches_dir, "identity_noise_stitch")
 
+quilting_dir = os.path.join(script_dir, "Image-Quilting-for-Texture-Synthesis")
+
 video_loc = os.path.join(script_dir, "Original.avi")
 
 
@@ -228,19 +230,27 @@ if __name__ == "__main__":
 
     path_to_avg = stills2avg("avg.png")
 
-    stills2noisemaps(os.path.join(images_dir, "avg.png"))
-    stills2avi("noisemaps.avi", stills_dir=noisemaps_dir)
+    # stills2noisemaps(os.path.join(images_dir, "avg.png"))
+    # stills2avi("noisemaps.avi", stills_dir=noisemaps_dir)
+    #
+    # stills2sidebysides(frames_dir, noisemaps_dir, orig_vs_noise_dir)
+    # stills2avi("orig_vs_noisemaps.avi", stills_dir=orig_vs_noise_dir)
+    # stills2stitched(frames_dir, frames_dir, stitches_test_dir)
+    #
+    # add_noisemaps_to_avg(path_to_avg)
+    # stills2stitched(frames_dir, noisemaps_test_dir, stitches_noisemap_test_dir)
+    # stills2sidebysides(frames_dir, stitches_noisemap_test_dir, orig_vs_noise_add_dir)
+    # stills2avi("orig_vs_noisemaps_plus_avg.avi", stills_dir=orig_vs_noise_add_dir)
 
-    stills2sidebysides(frames_dir, noisemaps_dir, orig_vs_noise_dir)
+    # Let's grab our averaged out data and get a nice sample to generate our quilt with.
+    cv.imwrite(
+        os.path.join(images_dir, "avg_quilt.png"),
+        cv.imread(path_to_avg)[140:180, 60:300, :],
+    )
 
-    stills2avi("orig_vs_noisemaps.avi", stills_dir=orig_vs_noise_dir)
-
-    stills2stitched(frames_dir, frames_dir, stitches_test_dir)
-
-    add_noisemaps_to_avg(path_to_avg)
-
-    stills2stitched(frames_dir, noisemaps_test_dir, stitches_noisemap_test_dir)
-
-    stills2sidebysides(frames_dir, stitches_noisemap_test_dir, orig_vs_noise_add_dir)
-
-    stills2avi("orig_vs_noisemaps_plus_avg.avi", stills_dir=orig_vs_noise_add_dir)
+    print("cd {}".format(quilting_dir))
+    os.system(
+        "cd {}; python main.py --image_path ../images/avg_quilt.png --output_file ../images/avg_quilt_big.png; cd ..".format(
+            quilting_dir
+        )
+    )
