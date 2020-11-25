@@ -242,3 +242,5 @@ if __name__ == "__main__":
     stills2stitched(frames_dir, noisemaps_test_dir, stitches_noisemap_test_dir)
 
     stills2sidebysides(frames_dir, stitches_noisemap_test_dir, orig_vs_noise_add_dir)
+
+    stills2avi("orig_vs_noisemaps_plus_avg.avi", stills_dir=orig_vs_noise_add_dir)
