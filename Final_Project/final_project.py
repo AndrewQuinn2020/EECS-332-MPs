@@ -7,6 +7,9 @@ import os
 import sys
 from itertools import product
 from functools import reduce
+from imutils.video import VideoStream
+from imutils.video import FPS
+import imutils
 
 import colorlog
 from PIL import Image
@@ -37,6 +40,7 @@ frames_dir = os.path.join(script_dir, "frames")
 images_dir = os.path.join(script_dir, "images")
 noisemaps_dir = os.path.join(images_dir, "noisemaps")
 noisemaps_test_dir = os.path.join(noisemaps_dir, "test_adding_back_to_avg")
+noisemaps_quilt_dir = os.path.join(noisemaps_dir, "noise_to_avg_quilted_over")
 results_dir = os.path.join(script_dir, "results")
 
 side_by_sides_dir = os.path.join(images_dir, "side_by_sides")
@@ -44,10 +48,17 @@ orig_vs_noise_dir = os.path.join(side_by_sides_dir, "original_vs_noisemaps")
 orig_vs_noise_add_dir = os.path.join(
     side_by_sides_dir, "original_vs_noisemaps_with_avg"
 )
+final_comparison_dir = os.path.join(side_by_sides_dir, "final_comparison")
 
 stitches_dir = os.path.join(images_dir, "stitches")
 stitches_test_dir = os.path.join(stitches_dir, "identity_stitch")
 stitches_noisemap_test_dir = os.path.join(stitches_dir, "identity_noise_stitch")
+stitches_left_track_right_quilt_dir = os.path.join(
+    stitches_dir, "left_track_right_quilt"
+)
+stiches_all_together_dir = os.path.join(stitches_dir, "all_together")
+
+pen_tracking_dir = os.path.join(images_dir, "pen_tracked")
 
 quilting_dir = os.path.join(script_dir, "Image-Quilting-for-Texture-Synthesis")
 
@@ -67,6 +78,11 @@ dirs = [
     noisemaps_test_dir,
     stitches_noisemap_test_dir,
     orig_vs_noise_add_dir,
+    pen_tracking_dir,
+    noisemaps_quilt_dir,
+    stitches_left_track_right_quilt_dir,
+    stiches_all_together_dir,
+    final_comparison_dir,
 ]
 
 
@@ -197,6 +213,10 @@ def stillstitch(top_still, bottom_still, cutoff=60):
     return np.vstack((top_still[:cutoff, :, :], bottom_still[cutoff:, :, :]))
 
 
+def stillvstitch(left_still, right_still, cutoff=60):
+    return np.hstack((left_still[:, :cutoff, :], right_still[:, cutoff:, :]))
+
+
 def stills2stitched(dir_1, dir_2, out_dir, zero_pad=4, cutoff=60):
     images_top = list(sorted([img for img in os.listdir(dir_1) if img[-4:] == ".png"]))
     images_bottom = list(
@@ -212,6 +232,73 @@ def stills2stitched(dir_1, dir_2, out_dir, zero_pad=4, cutoff=60):
         cv.imwrite(os.path.join(out_dir, filename), frame)
         framecount += 1
     return
+
+
+def stills2vstitched(
+    dir_1,
+    dir_2,
+    out_dir,
+    cutoffs,
+    zero_pad=4,
+):
+    images_left = list(sorted([img for img in os.listdir(dir_1) if img[-4:] == ".png"]))
+    images_right = list(
+        sorted([img for img in os.listdir(dir_2) if img[-4:] == ".png"])
+    )
+
+    framecount = 0
+    for (it, ib) in zip(images_left, images_right):
+        try:
+            filename = "{}.png".format(str(framecount).zfill(zero_pad))
+            frame_left = cv.imread(os.path.join(dir_1, it))
+            frame_right = cv.imread(os.path.join(dir_2, ib))
+            frame = stillvstitch(frame_left, frame_right, cutoff=cutoffs[framecount])
+            cv.imwrite(os.path.join(out_dir, filename), frame)
+            framecount += 1
+        except:
+            break
+    return
+
+
+def moving_average(a, n=3):
+    ret = np.cumsum(a, dtype=float)
+    ret[n:] = ret[n:] - ret[:-n]
+    return ret[n - 1 :] / n
+
+
+def avi2tracked(avi_in, start, end, results_dir=pen_tracking_dir, zero_pad=4):
+    centers = []
+    start_box = (start[0], start[1], end[0] - start[0], end[1] - start[1])
+    tracker = cv.TrackerKCF_create()
+
+    vs = cv.VideoCapture(avi_in)
+
+    framecount = 0
+    first_frame = True
+    while True:
+        frame = vs.read()[1]
+        if frame is None:
+            break
+
+        filename = "{}.png".format(str(framecount).zfill(zero_pad))
+        if first_frame:  # show the output frame
+            print(start_box)
+            tracker.init(frame, start_box)
+            first_frame = False
+            print(start_box)
+        else:
+            (success, box) = tracker.update(frame)
+            start = (int(box[0]), int(box[1]))
+            end = (int(box[0] + box[2]), int(box[1] + box[3]))
+            print(start, end)
+        frame = cv.rectangle(frame, start, end, (255, 0, 0), 2)
+        cv.imwrite(os.path.join(results_dir, filename), frame)
+
+        center = (start[0] + end[0]) // 2
+        centers.append(center)
+        framecount += 1
+
+    return centers
 
 
 if __name__ == "__main__":
@@ -230,27 +317,68 @@ if __name__ == "__main__":
 
     path_to_avg = stills2avg("avg.png")
 
-    # stills2noisemaps(os.path.join(images_dir, "avg.png"))
-    # stills2avi("noisemaps.avi", stills_dir=noisemaps_dir)
-    #
-    # stills2sidebysides(frames_dir, noisemaps_dir, orig_vs_noise_dir)
-    # stills2avi("orig_vs_noisemaps.avi", stills_dir=orig_vs_noise_dir)
-    # stills2stitched(frames_dir, frames_dir, stitches_test_dir)
-    #
-    # add_noisemaps_to_avg(path_to_avg)
-    # stills2stitched(frames_dir, noisemaps_test_dir, stitches_noisemap_test_dir)
-    # stills2sidebysides(frames_dir, stitches_noisemap_test_dir, orig_vs_noise_add_dir)
-    # stills2avi("orig_vs_noisemaps_plus_avg.avi", stills_dir=orig_vs_noise_add_dir)
+    stills2noisemaps(os.path.join(images_dir, "avg.png"))
+    stills2avi("noisemaps.avi", stills_dir=noisemaps_dir)
 
-    # Let's grab our averaged out data and get a nice sample to generate our quilt with.
+    stills2sidebysides(frames_dir, noisemaps_dir, orig_vs_noise_dir)
+    stills2avi("orig_vs_noisemaps.avi", stills_dir=orig_vs_noise_dir)
+    stills2stitched(frames_dir, frames_dir, stitches_test_dir)
+
+    add_noisemaps_to_avg(path_to_avg)
+    stills2stitched(frames_dir, noisemaps_test_dir, stitches_noisemap_test_dir)
+    stills2sidebysides(frames_dir, stitches_noisemap_test_dir, orig_vs_noise_add_dir)
+    stills2avi("orig_vs_noisemaps_plus_avg.avi", stills_dir=orig_vs_noise_add_dir)
+
+    # Generating image quilt.
     cv.imwrite(
         os.path.join(images_dir, "avg_quilt.png"),
         cv.imread(path_to_avg)[140:180, 60:300, :],
     )
 
-    print("cd {}".format(quilting_dir))
     os.system(
-        "cd {}; python main.py --image_path ../images/avg_quilt.png --output_file ../images/avg_quilt_big.png; cd ..".format(
+        "cd {}; python main.py -i ../images/avg_quilt.png -f ../images/avg_quilt_big.png".format(
             quilting_dir
         )
     )
+
+    avg_quilt_big = cv.imread(os.path.join(images_dir, "avg_quilt_big.png"))
+    quilt_cover = avg_quilt_big[-80:, -250:, :]
+    cv.imwrite(os.path.join(images_dir, "quilt_cover.png"), quilt_cover)
+
+    avg_quilted_over = cv.imread(path_to_avg)
+    avg_quilted_over[60:140, 54:304, :] = quilt_cover
+
+    cv.imwrite(os.path.join(images_dir, "avg_quilted_over.png"), avg_quilted_over)
+
+    centers = avi2tracked(video_loc, (262, 20), (262 + 45, 20 + 45))
+    centers = moving_average(centers).astype(int)
+    print(centers)
+    stills2avi("pen_tracked.avi", stills_dir=pen_tracking_dir)
+
+    add_noisemaps_to_avg(
+        os.path.join(images_dir, "avg_quilted_over.png"),
+        stills_dir=noisemaps_dir,
+        results_dir=noisemaps_quilt_dir,
+    )
+    stills2avi("quilted_noisemaps.avi", stills_dir=noisemaps_quilt_dir)
+    stills2vstitched(
+        frames_dir,
+        noisemaps_quilt_dir,
+        stitches_left_track_right_quilt_dir,
+        centers,
+    )
+    stills2avi(
+        "frame_left_quilted_right.avi", stills_dir=stitches_left_track_right_quilt_dir
+    )
+    stills2stitched(
+        pen_tracking_dir,
+        stitches_left_track_right_quilt_dir,
+        stiches_all_together_dir,
+        cutoff=80,
+    )
+    stills2avi("all_together.avi", stills_dir=stiches_all_together_dir)
+
+    stills2sidebysides(
+        frames_dir, stitches_left_track_right_quilt_dir, final_comparison_dir
+    )
+    stills2avi("final_comparison.avi", stills_dir=final_comparison_dir)
